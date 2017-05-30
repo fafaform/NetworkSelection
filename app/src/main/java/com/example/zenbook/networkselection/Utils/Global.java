@@ -13,11 +13,9 @@ import java.util.ArrayList;
  */
 
 public class Global {
-    //            InetAddress IPAddress = InetAddress.getByName("172.31.193.231");
-//    InetAddress IPAddress = InetAddress.getByName("192.168.1.46");
-    //            InetAddress IPAddress = InetAddress.getByName("172.31.16.5");
-//            InetAddress IPAddress = InetAddress.getByName("nbtc.ee.psu.ac.th");
-    public static String IPAddress = "192.168.1.40";
+//    public static String IPAddress = "192.168.1.40";
+    public static String IPAddress = "172.31.137.193";
+    
     public static Activity activity;
     public static boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager)Global.activity.getSystemService(Context.CONNECTIVITY_SERVICE);

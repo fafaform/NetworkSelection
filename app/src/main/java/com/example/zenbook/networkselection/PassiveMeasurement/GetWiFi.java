@@ -39,6 +39,7 @@ public class GetWiFi {
                     ranObject.setRSSi(find.level + "");
                     ranObject.setBand(find.frequency + "");
                     objects.add(ranObject);
+                    break;
                 }
             }
         }

@@ -16,9 +16,10 @@ public class GetEnergyEfficiency {
         this.ranObject = ranObject;
     }
     
-    public void Start(){
+    public void Start(String networkType){
 //        energyCalculation = new EnergyCalculation("WIFI");
-        energyCalculation = new EnergyCalculation("CELLULAR");
+//        energyCalculation = new EnergyCalculation("CELLULAR");
+        energyCalculation = new EnergyCalculation(networkType);
     }
     
     public void Stop(){

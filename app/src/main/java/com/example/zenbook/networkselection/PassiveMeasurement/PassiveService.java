@@ -171,6 +171,7 @@ outterloop:
 //            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 //            NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
     
+            
             int loop = 0;
             System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
             while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1,wifiManager.getConnectionInfo().getSSID().length()-1).equals(ranObject.getSSID())) {
@@ -182,16 +183,15 @@ outterloop:
                     e.printStackTrace();
                 }
             }
+            //TODO: WiFi Active Measurement
             System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
             System.out.println("Connected");
             GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject);
-            getEnergyEfficiency.Start();
+            getEnergyEfficiency.Start("WIFI");
             new GetUDPSuccessRate(ranObject);
             new RoundTripTime(ranObject);
             getEnergyEfficiency.Stop();
-
-    
-    
+            
             System.out.println("---------------------------------------------------------------");
             System.out.println(ranObject.getSSID());
             System.out.println(wifiManager.getConnectionInfo().getSSID());
@@ -199,6 +199,7 @@ outterloop:
             System.out.println("UDP Succes Rate: " + ranObject.getUDPSuccessRate());
             System.out.println("Delay: " + ranObject.getDelay());
             System.out.println("---------------------------------------------------------------");
+            //TODO: End WiFi Active Measurement
     
         }
 
