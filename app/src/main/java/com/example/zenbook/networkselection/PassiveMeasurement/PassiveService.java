@@ -7,26 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.provider.Settings;
-import android.telephony.CellIdentityCdma;
-import android.telephony.CellIdentityGsm;
-import android.telephony.CellIdentityLte;
-import android.telephony.CellIdentityWcdma;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
-import android.telephony.CellInfoWcdma;
-import android.telephony.CellSignalStrengthCdma;
-import android.telephony.CellSignalStrengthGsm;
-import android.telephony.CellSignalStrengthLte;
-import android.telephony.CellSignalStrengthWcdma;
-import android.telephony.TelephonyManager;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,6 +26,10 @@ import com.example.zenbook.networkselection.DynamicWeightNetworkSelection.Select
 import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +46,7 @@ public class PassiveService extends Service {
     private Notification n;
     private WifiManager wifiManager;
     private ArrayList<RANObject> SAVEDDATA;
-    private RANObject cellular;
+    private RANObject CELLULAR;
     private int APCOUNT;
     
     public PassiveService() {
@@ -84,14 +77,15 @@ public class PassiveService extends Service {
         }
         
         registerReceiver(new ScanReceiver(), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        ScanWifi();
+        Scanning();
         
         return START_STICKY;
     }
     
-    private void ScanWifi(){
+    private void Scanning(){
         System.out.println("--------------------------------------------------------------------------");
-        
+        //TODO: Cellular part
+        Cellular cellular = new Cellular();
         //TODO: Wifi part
         GetWiFi getWiFi = new GetWiFi(wifiManager);
         
@@ -101,33 +95,38 @@ public class PassiveService extends Service {
             SAVEDDATA = getWiFi.getObjects();
             APCOUNT = getWiFi.getAPCount();
             
-//            Cellular getCellular = new Cellular();
-//            cellular = getCellular.getRanObject();
+            CELLULAR = cellular.getRanObject();
+//            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//            System.out.println(CELLULAR.getSSID() + " : " + CELLULAR.getRSSi() + " : " + CELLULAR.getBand());
+//            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    
             calculate = true;
         }else {
-//            Cellular getcellular = new Cellular();
-//            if(!cellular.getRSSi().equals(getcellular.getRss()) || !cellular.getBand().equals(getcellular.getNetworkType())) {
-//                System.out.println("Cellular Changed");
-//                calculate = true;
-//            }
+            if(!CELLULAR.getRSSi().equals(cellular.getRss()) || !CELLULAR.getBand().equals(cellular.getNetworkType())) {
+                System.out.println("Cellular Changed");
+                calculate = true;
+            }
+            if(!calculate) {
 outterloop:
-            for (RANObject savedData : SAVEDDATA) {
-                for (RANObject currentData : getWiFi.getObjects()) {
-                    if (APCOUNT != getWiFi.getAPCount()) {
-                        System.out.println("AP count change");
-                        calculate = true;
-                        break outterloop;
-                    }
-                    if (savedData.getSSID().equals(currentData.getSSID())) {
-                        if (Math.abs(Integer.parseInt(savedData.getRSSi()) - Integer.parseInt(currentData.getRSSi())) > 10) {
-                            System.out.println("RSSi change too much");
+                for (RANObject savedData : SAVEDDATA) {
+                    for (RANObject currentData : getWiFi.getObjects()) {
+                        if (APCOUNT != getWiFi.getAPCount()) {
+                            System.out.println("AP count change");
                             calculate = true;
                             break outterloop;
                         }
-                        if (!savedData.getBand().equals(currentData.getBand())) {
-                            System.out.println("Band change");
-                            calculate = true;
-                            break outterloop;
+                        if (savedData.getSSID().equals(currentData.getSSID())) {
+                            if (!savedData.getRSSi().equals(currentData.getRSSi())) {
+//                            if (Math.abs(Integer.parseInt(savedData.getRSSi()) - Integer.parseInt(currentData.getRSSi())) > 10) {
+                                System.out.println("RSSi change too much");
+                                calculate = true;
+                                break outterloop;
+                            }
+                            if (!savedData.getBand().equals(currentData.getBand())) {
+                                System.out.println("Band change");
+                                calculate = true;
+                                break outterloop;
+                            }
                         }
                     }
                 }
@@ -183,13 +182,37 @@ outterloop:
                     e.printStackTrace();
                 }
             }
+    
+            String ipAddressString;
+            do {
+                int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+    
+                // Convert little-endian to big-endianif needed
+                if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+                    ipAddress = Integer.reverseBytes(ipAddress);
+                }
+    
+                byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+                try {
+                    ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+                    Thread.sleep(1000);
+                } catch (UnknownHostException ex) {
+                    ipAddressString = null;
+                } catch (InterruptedException e) {
+                    ipAddressString = null;
+                    e.printStackTrace();
+                }
+//                System.out.println(ipAddressString);
+            }while (ipAddressString == null);
+            
+    
             //TODO: WiFi Active Measurement
             System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
             System.out.println("Connected");
             GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject);
             getEnergyEfficiency.Start("WIFI");
-            new GetUDPSuccessRate(ranObject);
             new RoundTripTime(ranObject);
+            new GetUDPSuccessRate(ranObject);
             getEnergyEfficiency.Stop();
             
             System.out.println("---------------------------------------------------------------");
@@ -200,8 +223,44 @@ outterloop:
             System.out.println("Delay: " + ranObject.getDelay());
             System.out.println("---------------------------------------------------------------");
             //TODO: End WiFi Active Measurement
-    
         }
+        //TODO: Cellular Active Measurement
+        wifiManager.setWifiEnabled(false);
+        String ipAddressString;
+        do {
+            int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+        
+            // Convert little-endian to big-endianif needed
+            if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+                ipAddress = Integer.reverseBytes(ipAddress);
+            }
+        
+            byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+            try {
+                ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+                Thread.sleep(1000);
+            } catch (UnknownHostException ex) {
+                ipAddressString = null;
+            } catch (InterruptedException e) {
+                ipAddressString = null;
+                e.printStackTrace();
+            }
+//                System.out.println(ipAddressString);
+        }while (ipAddressString == null);
+        
+        GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR);
+        getEnergyEfficiency.Start("CELLULAR");
+        new RoundTripTime(CELLULAR);
+        new GetUDPSuccessRate(CELLULAR);
+        getEnergyEfficiency.Stop();
+    
+        System.out.println("---------------------------------------------------------------");
+        System.out.println(CELLULAR.getSSID());
+        System.out.println("Energy Efficiency: " + CELLULAR.getEnergyEfficiency());
+        System.out.println("UDP Succes Rate: " + CELLULAR.getUDPSuccessRate());
+        System.out.println("Delay: " + CELLULAR.getDelay());
+        System.out.println("---------------------------------------------------------------");
+        //TODO: END Cellular Active Measurement
 
 //
 //        objects.add(ranObject);
@@ -243,17 +302,28 @@ outterloop:
 //
 //        objects.add(ranObject);
 //        //TODO: end simulation here
-        
+        SAVEDDATA.add(0,CELLULAR);
         SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
-        for(WifiConfiguration wifiConfiguration : savedNetwork) {
-            String save = wifiConfiguration.SSID.substring(1,wifiConfiguration.SSID.length()-1);
-            if(SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)){
-                System.out.println("Selected Networkkkkkkkkkkkk");
-                wifiManager.disconnect();
-                wifiManager.updateNetwork(wifiConfiguration);
-                wifiManager.enableNetwork(wifiConfiguration.networkId, true);
-                wifiManager.reconnect();
-                break;
+        if(!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("CELLULAR")) {
+            wifiManager.setWifiEnabled(true);
+            List<ScanResult> scanResults = wifiManager.getScanResults();
+            while (scanResults.size() < 1){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (WifiConfiguration wifiConfiguration : savedNetwork) {
+                String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
+                if (SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)) {
+                    System.out.println("Selected Networkkkkkkkkkkkk");
+                    wifiManager.disconnect();
+                    wifiManager.updateNetwork(wifiConfiguration);
+                    wifiManager.enableNetwork(wifiConfiguration.networkId, true);
+                    wifiManager.reconnect();
+                    break;
+                }
             }
         }
     }
@@ -261,7 +331,7 @@ outterloop:
     private class ScanReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ScanWifi();
+            Scanning();
         }
     }
     

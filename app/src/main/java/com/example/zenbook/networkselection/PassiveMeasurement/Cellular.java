@@ -45,82 +45,70 @@ public class Cellular {
     
     public Cellular(){
         //TODO: Cellular part
+        TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         WifiManager wifiManager = (WifiManager) Global.activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(false);
-        while (!Global.isConnected()) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        ConnectivityManager manager = (ConnectivityManager) Global.activity.getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (manager != null && manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) {
-            // TODO: 9/18/2016 For API 17+
-            rss = 0;
-            networkType = "";
-            TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-//                                            System.out.println("DataNetworkType: "+telephonyManager.getNetworkType()+"\n"+"Network_Type_LTE: "
-//                                                    +telephonyManager.NETWORK_TYPE_LTE+"\n"+"Network_Type_WCDMA: "+telephonyManager.NETWORK_TYPE_UMTS);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_LTE){
-                    System.out.println("LTE");
-                    CellInfoLte cellinfogsm = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
-                    CellSignalStrengthLte cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                    CellIdentityLte cellIdentityLte = cellinfogsm.getCellIdentity();
+
+        if(telephonyManager.getSimState() != TelephonyManager.SIM_STATE_ABSENT) {
+            System.out.println("SIM Available and cellular available");
+            ConnectivityManager manager = (ConnectivityManager) Global.activity.getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = null;
+            if (manager != null) {
+                // TODO: 9/18/2016 For API 17+
+                rss = 0;
+                networkType = "";
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_LTE) {
+                        System.out.println("LTE");
+                        CellInfoLte cellinfogsm = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
+                        CellSignalStrengthLte cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                        CellIdentityLte cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCi()+"";
-                    rss = Double.parseDouble(cellSignalStrengthLte.getDbm() + "");
-                    networkType = "LTE";
-                }else if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_UMTS){
-                    System.out.println("UMTS");
-                    CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
-                    CellSignalStrengthWcdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                    CellIdentityWcdma cellIdentityLte = cellinfogsm.getCellIdentity();
+                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                        networkType = "LTE";
+                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_UMTS) {
+                        System.out.println("UMTS");
+                        CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
+                        CellSignalStrengthWcdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                        CellIdentityWcdma cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                    rss = Double.parseDouble(cellSignalStrengthLte.getDbm() + "");
-                    networkType = "UMTS";
-                }else if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_CDMA){
-                    System.out.println("CDMA");
-                    CellInfoCdma cellinfogsm = (CellInfoCdma) telephonyManager.getAllCellInfo().get(0);
-                    CellSignalStrengthCdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                    CellIdentityCdma cellIdentityLte = cellinfogsm.getCellIdentity();
+                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                        networkType = "UMTS";
+                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_CDMA) {
+                        System.out.println("CDMA");
+                        CellInfoCdma cellinfogsm = (CellInfoCdma) telephonyManager.getAllCellInfo().get(0);
+                        CellSignalStrengthCdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                        CellIdentityCdma cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getBasestationId()+"";
-                    rss = Double.parseDouble(cellSignalStrengthLte.getDbm() + "");
-                    networkType = "CDMA";
-                }else if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_EDGE){
-                    System.out.println("EDGE");
-                    CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
-                    CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                    CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
+                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                        networkType = "CDMA";
+                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_EDGE) {
+                        System.out.println("EDGE");
+                        CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
+                        CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                        CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                    rss = Double.parseDouble(cellSignalStrengthLte.getDbm() + "");
-                    networkType = "EDGE";
-                }else{
-                    System.out.println("UNKNOWN");
-                    CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
-                    CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                    CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
+                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                        networkType = "EDGE";
+                    } else {
+                        System.out.println("UNKNOWN");
+                        CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
+                        CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                        CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                    rss = Double.parseDouble(cellSignalStrengthLte.getDbm() + "");
-                    networkType = "UNKNOWN";
-                }
+                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                        networkType = "UNKNOWN";
+                    }
             
+                }
+                ranObject = new RANObject();
+                ranObject.setSSID("Cellular");
+                ranObject.setRSSi(rss + "");
+                ranObject.setBand(telephonyManager.getNetworkType() + "");
+            } else {
+                System.out.println("CELLULAR NOT CONNECT");
             }
-            ranObject = new RANObject();
-            ranObject.setSSID("Cellular");
-            ranObject.setRSSi(rss + "");
-            ranObject.setBand(telephonyManager.getNetworkType() + "");
         }else{
-            System.out.println("CELLULAR NOT CONNECT");
-        }
-        wifiManager.setWifiEnabled(true);
-        while (!Global.isConnected()) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.out.println("SIM STATE ABSENT");
         }
     }
 }

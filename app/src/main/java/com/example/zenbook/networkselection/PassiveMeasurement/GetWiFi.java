@@ -4,6 +4,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 
+import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class GetWiFi {
                     System.out.println(APCount + ": " + find.SSID);
                     RANObject ranObject = new RANObject();
                     ranObject.setSSID(find.SSID);
-                    ranObject.setRSSi(find.level + "");
+                    // number 5 will return a number between 0 and 4 in calculateSignalLevel
+                    ranObject.setRSSi(WifiManager.calculateSignalLevel(find.level, 5) + "");
+//                    System.out.println("Signal Level: " + WifiManager.calculateSignalLevel(find.level, 5));
                     ranObject.setBand(find.frequency + "");
                     objects.add(ranObject);
                     break;

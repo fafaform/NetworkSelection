@@ -1,8 +1,12 @@
 package com.example.zenbook.networkselection;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
 import com.example.zenbook.networkselection.ActiveMeasurement.Delay.RoundTripTime;
@@ -18,6 +22,17 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     
     @Override
+    protected void onResume(){
+        super.onResume();
+//        stopService();
+    }
+    
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        stopService();
+//    };
+    
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -30,7 +45,7 @@ public class MainActivity extends Activity {
         RANObject ranObject;
         
         startService();
-        
+        sendNotification();
         
         
     }
@@ -43,5 +58,30 @@ public class MainActivity extends Activity {
     // Method to stop the service
     public void stopService() {
         stopService(new Intent(getBaseContext(), PassiveService.class));
+    }
+    
+    public void sendNotification() {
+
+//Get an instance of NotificationManager//
+        
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+    
+        final Intent intent = new Intent(this, MainActivity.class);
+
+        final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+
+// Gets an instance of the NotificationManager service//
+        
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+//When you issue multiple notifications about the same type of event, it’s best practice for your app to try to update an existing notification with this new information, rather than immediately creating a new notification. If you want to update this notification at a later date, you need to assign it an ID. You can then use this ID whenever you issue a subsequent notification. If the previous notification is still visible, the system will update this existing notification, rather than create a new one. In this example, the notification’s ID is 001//
+        
+        mNotificationManager.notify(001, mBuilder.build());
+        
     }
 }
