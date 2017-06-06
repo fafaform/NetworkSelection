@@ -13,7 +13,8 @@ import java.util.ArrayList;
  */
 
 public class Global {
-    public static String IPAddress = "192.168.1.40";
+//    public static String IPAddress = "192.168.1.40";
+    public static String IPAddress = "nbtc.ee.psu.ac.th";
 //    public static String IPAddress = "172.31.137.193";
     
     public static Activity activity;

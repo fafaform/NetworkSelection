@@ -36,7 +36,9 @@ public class RoundTripTime {
                 
             } else {
                 start = false;
-                    ranObject.setDelay((round(Math.abs(Math.min(0,(avg - DELAY_TH) / DELAY_TH)), 4) + ""));
+                if(avg != null) {
+                    ranObject.setDelay((round(Math.abs(Math.min(0, (avg - DELAY_TH) / DELAY_TH)), 4) + ""));
+                }else ranObject.setDelay(0 + "");
             }
             if (count < NUMBER_OF_PING) {
                 try{

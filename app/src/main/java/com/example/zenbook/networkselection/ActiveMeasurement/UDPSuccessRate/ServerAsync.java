@@ -38,7 +38,7 @@ public class ServerAsync implements Runnable {
 //                System.out.println("Received Return");
             } catch (SocketTimeoutException e){
                 e.printStackTrace();
-                message = "0";
+                message = "1";
             }
 //            Global.lossRate++;
 //            if(message.equals(Global.lossRate+"")) {

@@ -26,6 +26,9 @@ public class GetWiFi {
         return objects;
     }
     public GetWiFi(WifiManager wifiManager){
+        if(!wifiManager.isWifiEnabled()){
+            wifiManager.setWifiEnabled(true);
+        }
         List<ScanResult> scanResults = wifiManager.getScanResults();
         List<WifiConfiguration> savedNetwork = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration saved : savedNetwork) {

@@ -15,6 +15,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
@@ -103,7 +104,7 @@ public class PassiveService extends Service {
             calculate = true;
         }else {
             if(!CELLULAR.getRSSi().equals(cellular.getRss()) || !CELLULAR.getBand().equals(cellular.getNetworkType())) {
-                System.out.println("Cellular Changed");
+                System.out.println("Cellular Changed: " + CELLULAR.getRSSi() + ":" + cellular.getRss() + ", " + CELLULAR.getBand() + ":" + cellular.getNetworkType());
                 calculate = true;
             }
             if(!calculate) {
@@ -136,6 +137,7 @@ outterloop:
     
         if(calculate){
             SAVEDDATA = getWiFi.getObjects();
+            CELLULAR = cellular.getRanObject();
             new Thread() {
                 @Override
                 public void run() {
@@ -226,27 +228,36 @@ outterloop:
         }
         //TODO: Cellular Active Measurement
         wifiManager.setWifiEnabled(false);
-        String ipAddressString;
-        do {
-            int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-        
-            // Convert little-endian to big-endianif needed
-            if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-                ipAddress = Integer.reverseBytes(ipAddress);
-            }
-        
-            byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-            try {
-                ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-                Thread.sleep(1000);
-            } catch (UnknownHostException ex) {
-                ipAddressString = null;
-            } catch (InterruptedException e) {
-                ipAddressString = null;
-                e.printStackTrace();
-            }
-//                System.out.println(ipAddressString);
-        }while (ipAddressString == null);
+//        String ipAddressString;
+//        do {
+//            int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+//
+//            // Convert little-endian to big-endianif needed
+//            if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+//                ipAddress = Integer.reverseBytes(ipAddress);
+//            }
+//
+//            byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+//            try {
+//                ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+//                Thread.sleep(1000);
+//            } catch (UnknownHostException ex) {
+//                ipAddressString = null;
+//            } catch (InterruptedException e) {
+//                ipAddressString = null;
+//                e.printStackTrace();
+//            }
+////                System.out.println(ipAddressString);
+//        }while (ipAddressString == null);
+    
+//        TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+//        while(telephonyManager.getDataState() != TelephonyManager.DATA_CONNECTED){
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
         
         GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR);
         getEnergyEfficiency.Start("CELLULAR");
@@ -302,6 +313,8 @@ outterloop:
 //
 //        objects.add(ranObject);
 //        //TODO: end simulation here
+        
+        //TODO: Network Selection Start Here
         SAVEDDATA.add(0,CELLULAR);
         SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
         if(!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("CELLULAR")) {
@@ -317,7 +330,7 @@ outterloop:
             for (WifiConfiguration wifiConfiguration : savedNetwork) {
                 String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
                 if (SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)) {
-                    System.out.println("Selected Networkkkkkkkkkkkk");
+                    System.out.println("Selected Network: " + save);
                     wifiManager.disconnect();
                     wifiManager.updateNetwork(wifiConfiguration);
                     wifiManager.enableNetwork(wifiConfiguration.networkId, true);
@@ -325,6 +338,8 @@ outterloop:
                     break;
                 }
             }
+        }else{
+            wifiManager.setWifiEnabled(false);
         }
     }
     
