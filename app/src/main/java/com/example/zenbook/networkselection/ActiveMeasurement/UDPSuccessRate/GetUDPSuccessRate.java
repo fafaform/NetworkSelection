@@ -21,6 +21,7 @@ public class GetUDPSuccessRate {
 //        System.out.println("*********************************************************************START*************************************************");
         Thread receive = new Thread();
         Thread send;
+        
     
         DatagramSocket clientSocket = null;
         try {
@@ -28,7 +29,27 @@ public class GetUDPSuccessRate {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        ServerAsync serverAsync = new ServerAsync(clientSocket, ranObject);
+    
+        ClientAsync clientAsync;
+        ServerAsync serverAsync;
+    
+        //TODO: Clear Server by sending "end" first
+//        ServerAsync serverAsync = new ServerAsync(clientSocket, ranObject);
+//        receive = new Thread(serverAsync);
+//        receive.start();
+        clientAsync = new ClientAsync("start", clientSocket);
+        send = new Thread(clientAsync);
+        send.start();
+        try {
+            Thread.sleep(1000);
+//            receive.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //TODO: End Clear Server
+    
+        //initialize server on mobile to receive udp success rate
+        serverAsync = new ServerAsync(clientSocket, ranObject);
         receive = new Thread(serverAsync);
         receive.start();
     
@@ -36,7 +57,6 @@ public class GetUDPSuccessRate {
         int count = 0;
         String sendingMessage = "";
         for (int i = 0; i < number; i++) {
-            ClientAsync clientAsync;
 //            System.out.println(i+":"+count);
 //            sendingMessage += Double.parseDouble(new DecimalFormat("###.##").format(Math.sin(i * 0.1 * Math.PI / 2))) + "&";
             count++;

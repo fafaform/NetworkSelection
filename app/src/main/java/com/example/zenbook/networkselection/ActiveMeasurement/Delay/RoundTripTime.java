@@ -16,7 +16,8 @@ public class RoundTripTime {
     private static int PING_PACKET_SIZE = 32;
     private static int NUMBER_OF_PING = 1;
     private static int WAITING_TIME_MILLISECOND = 1000;
-    private static int DELAY_TH = 500;
+    private static int DELAY_TH = 250;
+//    private static int DELAY_TH = 500;
     
     private boolean start = true;
     private int count = 0;

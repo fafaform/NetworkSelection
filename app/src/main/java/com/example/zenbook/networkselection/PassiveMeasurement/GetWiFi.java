@@ -7,6 +7,9 @@ import android.net.wifi.WifiManager;
 import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +28,31 @@ public class GetWiFi {
     public ArrayList<RANObject> getObjects(){
         return objects;
     }
-    public GetWiFi(WifiManager wifiManager){
-        if(!wifiManager.isWifiEnabled()){
-            wifiManager.setWifiEnabled(true);
-        }
+    public GetWiFi(WifiManager wifiManager, List<WifiConfiguration> savedNetwork){
+//        if(!wifiManager.isWifiEnabled()){
+//            wifiManager.setWifiEnabled(true);
+//        }
         List<ScanResult> scanResults = wifiManager.getScanResults();
-        List<WifiConfiguration> savedNetwork = wifiManager.getConfiguredNetworks();
+//        List<WifiConfiguration> savedNetwork = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration saved : savedNetwork) {
             for (ScanResult find : scanResults) {
 //                System.out.println(saved.SSID.substring(1,saved.SSID.length()-1) + " : " + find.SSID);
                 String savedSSID = saved.SSID.substring(1,saved.SSID.length()-1);
                 if ((find.SSID).equals(savedSSID)) {
                     APCount++;
-                    System.out.println(APCount + ": " + find.SSID);
+                    System.out.println(APCount + ": " + find.SSID + " " + "// RSSi: " + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency);
+    
+                    try {
+                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                        Global.fileOutputStream.write((APCount + ": " + find.SSID + " " + "// RSSi: " + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency).getBytes());
+                        Global.fileOutputStream.write("\n".getBytes());
+                        Global.fileOutputStream.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    
                     RANObject ranObject = new RANObject();
                     ranObject.setSSID(find.SSID);
                     // number 5 will return a number between 0 and 4 in calculateSignalLevel
