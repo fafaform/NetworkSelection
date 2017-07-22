@@ -1,0 +1,304 @@
+[
+    {
+        "outputFile": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 8,
+                    "endColumn": 17,
+                    "endOffset": 265
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endLine": 8,
+                        "endColumn": 17,
+                        "endOffset": 265
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 270,
+                    "endLine": 15,
+                    "endColumn": 17,
+                    "endOffset": 476
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 270,
+                        "endLine": 15,
+                        "endColumn": 17,
+                        "endOffset": 476
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 481,
+                    "endLine": 22,
+                    "endColumn": 18,
+                    "endOffset": 635
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 481,
+                        "endLine": 22,
+                        "endColumn": 18,
+                        "endOffset": 635
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 640,
+                    "endLine": 29,
+                    "endColumn": 17,
+                    "endOffset": 796
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 640,
+                        "endLine": 29,
+                        "endColumn": 17,
+                        "endOffset": 796
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 801,
+                    "endColumn": 47,
+                    "endOffset": 844
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 801,
+                        "endColumn": 47,
+                        "endOffset": 844
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 31,
+                    "startColumn": 4,
+                    "startOffset": 849,
+                    "endColumn": 119,
+                    "endOffset": 964
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 31,
+                        "startColumn": 4,
+                        "startOffset": 849,
+                        "endColumn": 119,
+                        "endOffset": 964
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 969,
+                    "endLine": 80,
+                    "endColumn": 13,
+                    "endOffset": 3219
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 969,
+                        "endLine": 80,
+                        "endColumn": 13,
+                        "endOffset": 3219
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 81,
+                    "startColumn": 4,
+                    "startOffset": 3224,
+                    "endColumn": 118,
+                    "endOffset": 3338
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 81,
+                        "startColumn": 4,
+                        "startOffset": 3224,
+                        "endColumn": 118,
+                        "endOffset": 3338
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 82,
+                    "startColumn": 4,
+                    "startOffset": 3343,
+                    "endColumn": 106,
+                    "endOffset": 3445
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 82,
+                        "startColumn": 4,
+                        "startOffset": 3343,
+                        "endColumn": 106,
+                        "endOffset": 3445
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 83,
+                    "startColumn": 4,
+                    "startOffset": 3450,
+                    "endColumn": 356,
+                    "endOffset": 3802
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 83,
+                        "startColumn": 4,
+                        "startOffset": 3450,
+                        "endColumn": 356,
+                        "endOffset": 3802
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 84,
+                    "startColumn": 4,
+                    "startOffset": 3807,
+                    "endColumn": 354,
+                    "endOffset": 4157
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 84,
+                        "startColumn": 4,
+                        "startOffset": 3807,
+                        "endColumn": 354,
+                        "endOffset": 4157
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 85,
+                    "startColumn": 4,
+                    "startOffset": 4162,
+                    "endLine": 111,
+                    "endColumn": 17,
+                    "endOffset": 5491
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 85,
+                        "startColumn": 4,
+                        "startOffset": 4162,
+                        "endLine": 111,
+                        "endColumn": 17,
+                        "endOffset": 5491
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 112,
+                    "startColumn": 4,
+                    "startOffset": 5496,
+                    "endColumn": 238,
+                    "endOffset": 5730
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 112,
+                        "startColumn": 4,
+                        "startOffset": 5496,
+                        "endColumn": 238,
+                        "endOffset": 5730
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 113,
+                    "startColumn": 4,
+                    "startOffset": 5735,
+                    "endColumn": 74,
+                    "endOffset": 5805
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 113,
+                        "startColumn": 4,
+                        "startOffset": 5735,
+                        "endColumn": 74,
+                        "endOffset": 5805
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 114,
+                    "startColumn": 4,
+                    "startOffset": 5810,
+                    "endColumn": 94,
+                    "endOffset": 5900
+                },
+                "from": {
+                    "file": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 114,
+                        "startColumn": 4,
+                        "startOffset": 5810,
+                        "endColumn": 94,
+                        "endOffset": 5900
+                    }
+                }
+            }
+        ]
+    }
+]

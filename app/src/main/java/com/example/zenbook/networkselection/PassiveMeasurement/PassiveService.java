@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.IBinder;
@@ -206,7 +207,8 @@ outterloop:
                             break outterloop;
                         }
                         if (savedData.getSSID().equals(currentData.getSSID())) {
-                            if (!savedData.getRSSi().equals(currentData.getRSSi())) {
+                            System.out.println("RSSI difference: " + Math.abs(Integer.parseInt(savedData.getRSSi()) - Integer.parseInt(currentData.getRSSi())));
+                            if (Math.abs(Integer.parseInt(savedData.getRSSi()) - Integer.parseInt(currentData.getRSSi())) > 9) {
 //                            if (Math.abs(Integer.parseInt(savedData.getRSSi()) - Integer.parseInt(currentData.getRSSi())) > 10) {
                                 System.out.println("RSSi change too much of: " + currentData.getSSID());
                                 calculate = true;
@@ -285,170 +287,197 @@ outterloop:
     }
     
     private void doActive(){
-        //TODO: edit here
-        if(wifiManager.isWifiEnabled() == false){
-            wifiManager.setWifiEnabled(true);
-        }
-        List<WifiConfiguration> savedNetwork = wifiManager.getConfiguredNetworks();
-        Iterator<RANObject> iterator = SAVEDDATA.iterator();
-        while(iterator.hasNext()){
-            RANObject ranObject = iterator.next();
-//        for(RANObject ranObject : SAVEDDATA){
-            //TODO: Connect to network
-            for(WifiConfiguration wifiConfiguration : savedNetwork) {
-                String save = wifiConfiguration.SSID.substring(1,wifiConfiguration.SSID.length()-1);
-                if(ranObject.getSSID().equals(save)){
-                    System.out.println("wifi priority: " + wifiConfiguration.priority);
-                    wifiManager.disconnect();
-                    wifiManager.updateNetwork(wifiConfiguration);
-                    wifiManager.enableNetwork(wifiConfiguration.networkId, true);
-                    wifiManager.reconnect();
-//                    System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + save + ", network id: " + wifiConfiguration.networkId);
-                    break;
-                }
+        try {
+            //TODO: edit here
+            if (wifiManager.isWifiEnabled() == false) {
+                wifiManager.setWifiEnabled(true);
             }
-            //TODO: end Connect to network
-    
+            List<WifiConfiguration> savedNetwork = wifiManager.getConfiguredNetworks();
+            Iterator<RANObject> iterator = SAVEDDATA.iterator();
+            while (iterator.hasNext()) {
+                RANObject ranObject = iterator.next();
+//        for(RANObject ranObject : SAVEDDATA){
+                //TODO: Connect to network
+                for (WifiConfiguration wifiConfiguration : savedNetwork) {
+                    String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
+                    if (ranObject.getSSID().equals(save)) {
+                        System.out.println("wifi priority: " + wifiConfiguration.priority);
+                        wifiManager.disconnect();
+                        wifiManager.updateNetwork(wifiConfiguration);
+                        wifiManager.enableNetwork(wifiConfiguration.networkId, true);
+                        wifiManager.reconnect();
+//                    System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + save + ", network id: " + wifiConfiguration.networkId);
+                        break;
+                    }
+                }
+                //TODO: end Connect to network
+
 //            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 //            NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-    
+        
+        
+                int loop = 0;
+                System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
+                while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1, wifiManager.getConnectionInfo().getSSID().length() - 1).equals(ranObject.getSSID())) {
+                    loop++;
+                    System.out.println(loop);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+        
+                String ipAddressString;
+                do {
+                    int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
             
-            int loop = 0;
-            System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
-            while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1,wifiManager.getConnectionInfo().getSSID().length()-1).equals(ranObject.getSSID())) {
-                loop++;
-                System.out.println(loop);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-    
-            String ipAddressString;
-            do {
-                int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-    
-                // Convert little-endian to big-endianif needed
-                if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-                    ipAddress = Integer.reverseBytes(ipAddress);
-                }
-    
-                byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-                try {
-                    ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-                    Thread.sleep(1000);
-                } catch (UnknownHostException ex) {
-                    ipAddressString = null;
-                } catch (InterruptedException e) {
-                    ipAddressString = null;
-                    e.printStackTrace();
-                }
+                    // Convert little-endian to big-endianif needed
+                    if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+                        ipAddress = Integer.reverseBytes(ipAddress);
+                    }
+            
+                    byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+                    try {
+                        ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+                        Thread.sleep(1000);
+                    } catch (UnknownHostException ex) {
+                        ipAddressString = null;
+                    } catch (InterruptedException e) {
+                        ipAddressString = null;
+                        e.printStackTrace();
+                    }
 //                System.out.println(ipAddressString);
-            }while (ipAddressString == null);
-            
+                } while (ipAddressString == null);
+        
+        
+                //TODO: WiFi Active Measurement
+                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
+                System.out.println("Connected");
+                GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject, Global.savedInstanceState);
+                getEnergyEfficiency.Start("WIFI");
+                new RoundTripTime(ranObject);
+                new GetUDPSuccessRate(ranObject);
+                getEnergyEfficiency.Stop();
+        
+                System.out.println("---------------------------------------------------------------");
+                System.out.println(ranObject.getSSID());
+                System.out.println(wifiManager.getConnectionInfo().getSSID());
+                System.out.println("Energy Efficiency: " + ranObject.getEnergyEfficiency());
+                System.out.println("UDP Success Rate: " + ranObject.getUDPSuccessRate());
+                System.out.println("Delay: " + ranObject.getDelay());
+                System.out.println("Link Speed" + wifiInfo.getLinkSpeed());
+                System.out.println("---------------------------------------------------------------");
+        
+                //TODO: Write to file
+                String writeTo = "---------------------------------------------------------------" + "\n";
+                writeTo += wifiManager.getConnectionInfo().getSSID() + "\n";
+                writeTo += "Energy Usage (Joule): " + getEnergyEfficiency.getJoule() + "\n";
+                writeTo += "Energy Efficiency: " + ranObject.getEnergyEfficiency() + "\n";
+                writeTo += "UDP Success Rate: " + ranObject.getUDPSuccessRate() + "\n";
+                writeTo += "Delay: " + ranObject.getDelay() + "\n";
+                writeTo += "---------------------------------------------------------------";
+                try {
+                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                    Global.fileOutputStream.write((writeTo).getBytes());
+                    Global.fileOutputStream.write("\n".getBytes());
+                    Global.fileOutputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //TODO: End Write to File
+                //TODO: End WiFi Active Measurement
+            }
+            //TODO: Cellular Active Measurement
+            wifiManager.setWifiEnabled(false);
+//            String ipAddressString;
+//            boolean mobileNetwork = false;
+//            do {
+//                int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+//
+//                // Convert little-endian to big-endianif needed
+//                if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+//                    ipAddress = Integer.reverseBytes(ipAddress);
+//                }
+//
+//                byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+//                try {
+//                    ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+//                    Thread.sleep(1000);
+//                } catch (UnknownHostException ex) {
+//                    ipAddressString = null;
+//                } catch (InterruptedException e) {
+//                    ipAddressString = null;
+//                    e.printStackTrace();
+//                }
+//                System.out.println(ipAddressString);
+//                ConnectivityManager mConnectivityManager = (ConnectivityManager) Global.activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//                if (mConnectivityManager != null) {
+//                    NetworkInfo mobileInfo = mConnectivityManager
+//                            .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//                    if (mobileInfo != null)
+//                        mobileNetwork = mobileInfo.isAvailable();
+//                }
+//                System.out.println(mobileNetwork);
+//            } while (ipAddressString == null || !mobileNetwork);
+                
+            int cellularCount = 0;
+            boolean haveCellular = true;
+                TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+                while (telephonyManager.getDataState() != TelephonyManager.DATA_CONNECTED) {
+                    try {
+                        cellularCount++;
+                        System.out.println(cellularCount);
+                        if(cellularCount == 60){
+                            haveCellular = false;
+                            break;
+                        }
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            if(haveCellular) {
+                GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR, Global.savedInstanceState);
+                getEnergyEfficiency.Start("CELLULAR");
+                new RoundTripTime(CELLULAR);
+                new GetUDPSuccessRate(CELLULAR);
+                getEnergyEfficiency.Stop();
     
-            //TODO: WiFi Active Measurement
-            System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
-            System.out.println("Connected");
-            GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject);
-            getEnergyEfficiency.Start("WIFI");
-            new RoundTripTime(ranObject);
-            new GetUDPSuccessRate(ranObject);
-            getEnergyEfficiency.Stop();
-            
-            System.out.println("---------------------------------------------------------------");
-            System.out.println(ranObject.getSSID());
-            System.out.println(wifiManager.getConnectionInfo().getSSID());
-            System.out.println("Energy Efficiency: " + ranObject.getEnergyEfficiency());
-            System.out.println("UDP Succes Rate: " + ranObject.getUDPSuccessRate());
-            System.out.println("Delay: " + ranObject.getDelay());
-            System.out.println("---------------------------------------------------------------");
-            
-            //TODO: Write to file
-            String writeTo = "---------------------------------------------------------------" + "\n";
-            writeTo += wifiManager.getConnectionInfo().getSSID() + "\n";
-            writeTo += "Energy Efficiency: " + ranObject.getEnergyEfficiency() + "\n";
-            writeTo += "UDP Succes Rate: " + ranObject.getUDPSuccessRate() + "\n";
-            writeTo += "Delay: " + ranObject.getDelay() + "\n";
-            writeTo += "---------------------------------------------------------------";
-            try {
-                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                Global.fileOutputStream.write((writeTo).getBytes());
-                Global.fileOutputStream.write("\n".getBytes());
-                Global.fileOutputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("---------------------------------------------------------------");
+                System.out.println(CELLULAR.getSSID());
+                System.out.println("Energy Efficiency: " + CELLULAR.getEnergyEfficiency());
+                System.out.println("UDP Success Rate: " + CELLULAR.getUDPSuccessRate());
+                System.out.println("Delay: " + CELLULAR.getDelay());
+                System.out.println("---------------------------------------------------------------");
+                //TODO: Write to file
+                String writeTo = "---------------------------------------------------------------" + "\n";
+                writeTo += CELLULAR.getSSID() + "\n";
+                writeTo += "Energy Usage (Joule): " + getEnergyEfficiency.getJoule() + "\n";
+                writeTo += "Energy Efficiency: " + CELLULAR.getEnergyEfficiency() + "\n";
+                writeTo += "UDP Success Rate: " + CELLULAR.getUDPSuccessRate() + "\n";
+                writeTo += "Delay: " + CELLULAR.getDelay() + "\n";
+                writeTo += "---------------------------------------------------------------";
+                try {
+                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                    Global.fileOutputStream.write((writeTo).getBytes());
+                    Global.fileOutputStream.write("\n".getBytes());
+                    Global.fileOutputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                CELLULAR.setDelay(0 + "");
+                CELLULAR.setEnergyEfficiency(0 + "");
+                CELLULAR.setUDPSuccessRate(0 + "");
             }
             //TODO: End Write to File
-            //TODO: End WiFi Active Measurement
-        }
-        //TODO: Cellular Active Measurement
-        wifiManager.setWifiEnabled(false);
-        String ipAddressString;
-        do {
-            int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-
-            // Convert little-endian to big-endianif needed
-            if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-                ipAddress = Integer.reverseBytes(ipAddress);
-            }
-
-            byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-            try {
-                ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-                Thread.sleep(1000);
-            } catch (UnknownHostException ex) {
-                ipAddressString = null;
-            } catch (InterruptedException e) {
-                ipAddressString = null;
-                e.printStackTrace();
-            }
-//                System.out.println(ipAddressString);
-        }while (ipAddressString == null);
-    
-        TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        while(telephonyManager.getDataState() != TelephonyManager.DATA_CONNECTED){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR);
-        getEnergyEfficiency.Start("CELLULAR");
-        new RoundTripTime(CELLULAR);
-        new GetUDPSuccessRate(CELLULAR);
-        getEnergyEfficiency.Stop();
-    
-        System.out.println("---------------------------------------------------------------");
-        System.out.println(CELLULAR.getSSID());
-        System.out.println("Energy Efficiency: " + CELLULAR.getEnergyEfficiency());
-        System.out.println("UDP Succes Rate: " + CELLULAR.getUDPSuccessRate());
-        System.out.println("Delay: " + CELLULAR.getDelay());
-        System.out.println("---------------------------------------------------------------");
-        //TODO: Write to file
-        String writeTo = "---------------------------------------------------------------" + "\n";
-        writeTo += CELLULAR.getSSID() + "\n";
-        writeTo += "Energy Efficiency: " + CELLULAR.getEnergyEfficiency() + "\n";
-        writeTo += "UDP Succes Rate: " + CELLULAR.getUDPSuccessRate() + "\n";
-        writeTo += "Delay: " + CELLULAR.getDelay() + "\n";
-        writeTo += "---------------------------------------------------------------";
-        try {
-            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-            Global.fileOutputStream.write((writeTo).getBytes());
-            Global.fileOutputStream.write("\n".getBytes());
-            Global.fileOutputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //TODO: End Write to File
-        //TODO: END Cellular Active Measurement
+            //TODO: END Cellular Active Measurement
 
 //
 //        objects.add(ranObject);
@@ -490,47 +519,51 @@ outterloop:
 //
 //        objects.add(ranObject);
 //        //TODO: end simulation here
-        
-        //TODO: Network Selection Start Here
-        SAVEDDATA.add(0,CELLULAR);
-        SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
-        if(!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("Cellular")) {
-            wifiManager.setWifiEnabled(true);
-            List<ScanResult> scanResults = wifiManager.getScanResults();
-            while (scanResults.size() < 1){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            for (WifiConfiguration wifiConfiguration : savedNetwork) {
-                String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
-                if (SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)) {
-                    System.out.println("Selected Network: " + save);
     
-                    //TODO: Write to file
+            //TODO: Network Selection Start Here
+            SAVEDDATA.add(0, CELLULAR);
+            SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
+            if (!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("Cellular")) {
+                wifiManager.setWifiEnabled(true);
+                List<ScanResult> scanResults = wifiManager.getScanResults();
+                while (scanResults.size() < 1) {
                     try {
-                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                        Global.fileOutputStream.write(("Selected Network: " + save).getBytes());
-                        Global.fileOutputStream.write("\n".getBytes());
-                        Global.fileOutputStream.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                        System.out.println("Select loop");
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //TODO: End Write to File
-                    
-                    wifiManager.disconnect();
-                    wifiManager.updateNetwork(wifiConfiguration);
-                    wifiManager.enableNetwork(wifiConfiguration.networkId, true);
-                    wifiManager.reconnect();
-                    break;
                 }
+                for (WifiConfiguration wifiConfiguration : savedNetwork) {
+                    String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
+                    if (SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)) {
+                        System.out.println("Selected Network: " + save);
+                
+                        //TODO: Write to file
+                        try {
+                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                            Global.fileOutputStream.write(("Selected Network: " + save).getBytes());
+                            Global.fileOutputStream.write("\n".getBytes());
+                            Global.fileOutputStream.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //TODO: End Write to File
+                
+                        wifiManager.disconnect();
+                        wifiManager.updateNetwork(wifiConfiguration);
+                        wifiManager.enableNetwork(wifiConfiguration.networkId, true);
+                        wifiManager.reconnect();
+                        break;
+                    }
+                }
+            } else {
+                wifiManager.setWifiEnabled(false);
             }
-        }else{
-            wifiManager.setWifiEnabled(false);
+        }catch (Exception e){
+            return;
         }
     }
     
@@ -595,6 +628,7 @@ outterloop:
         super.onDestroy();
         Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
 //        wifiManager.setWifiEnabled(false);
+        
     }
     
     private void alwaysScanWifi(){

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,6 +25,7 @@ public class Global {
     public static FileOutputStream fileOutputStream;
     
     public static Activity activity;
+    public static Bundle savedInstanceState;
     public static boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager)Global.activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;

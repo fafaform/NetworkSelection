@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+
+        minSdkVersion 3
+        targetSdkVersion 3
+
+        ndk {
+            moduleName "bindings"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/achartengine-1.0.0.jar')
+}

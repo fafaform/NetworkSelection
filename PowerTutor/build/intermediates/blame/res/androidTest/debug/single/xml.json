@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\widget_info.xml",
+        "source": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\xml\\widget_info.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\preferences.xml",
+        "source": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\xml\\preferences.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\viewer_preferences.xml",
+        "source": "D:\\Workspace\\NetworkSelection\\PowerTutor\\build\\intermediates\\bundles\\debug\\res\\xml\\viewer_preferences.xml"
+    }
+]

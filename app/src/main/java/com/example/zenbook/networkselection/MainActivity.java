@@ -1,6 +1,7 @@
 package com.example.zenbook.networkselection;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,6 +19,8 @@ import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.util.ArrayList;
+
+import edu.umich.PowerTutor.service.UMLoggerService;
 
 public class MainActivity extends Activity {
     
@@ -37,6 +40,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Global.activity = this;
+        Global.savedInstanceState = savedInstanceState;
 //        BatteryManager mBatteryManager = (BatteryManager)this.getSystemService(Context.BATTERY_SERVICE);
 //        int level = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
         
@@ -52,7 +56,14 @@ public class MainActivity extends Activity {
     
     public void startService() {
         System.out.println("Start service");
-        startService(new Intent(this, PassiveService.class));
+        if(!isMyServiceRunning(PassiveService.class)) {
+//            System.out.println("Open service");
+            startService(new Intent(this, PassiveService.class));
+        }
+        if(!isMyServiceRunning(UMLoggerService.class)) {
+//            System.out.println("Open sub service");
+            startService(new Intent(this, UMLoggerService.class));
+        }
     }
     
     // Method to stop the service
@@ -83,5 +94,15 @@ public class MainActivity extends Activity {
         
         mNotificationManager.notify(001, mBuilder.build());
         
+    }
+    
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
