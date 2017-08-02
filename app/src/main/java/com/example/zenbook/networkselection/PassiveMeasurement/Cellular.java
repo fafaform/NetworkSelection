@@ -48,7 +48,7 @@ public class Cellular {
         return networkType;
     }
     public String getRss() {
-        return rss + "";
+        return rssi + "";
     }
     
     public Cellular(){
@@ -84,7 +84,7 @@ public class Cellular {
                         System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: LTE");
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rss + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
+                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -104,7 +104,7 @@ public class Cellular {
                         System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UMTS");
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rss + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -124,7 +124,7 @@ public class Cellular {
                         System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: CDMA");
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rss + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
+                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -144,7 +144,7 @@ public class Cellular {
                         System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: EDGE");
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rss + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -164,7 +164,7 @@ public class Cellular {
                         System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rss + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -178,7 +178,7 @@ public class Cellular {
                 }
                 ranObject = new RANObject();
                 ranObject.setSSID("Cellular");
-                ranObject.setRSSi(rss + "");
+                ranObject.setRSSi(rssi + "");
                 ranObject.setBand(telephonyManager.getNetworkType() + "");
             } else {
 //                System.out.println("CELLULAR NOT CONNECT");

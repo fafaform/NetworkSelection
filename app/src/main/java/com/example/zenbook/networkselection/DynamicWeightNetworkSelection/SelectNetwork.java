@@ -34,7 +34,10 @@ public class SelectNetwork {
     }
     public int getRANObject(){
 //        System.out.println("Again: "+network.getSelectNetwork());
-    
         return network.getSelectNetwork();
+    }
+    
+    public double[] getWeight(){
+        return network.getWeight();
     }
 }

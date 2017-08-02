@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckedTextView;
+import android.widget.Toast;
 
 import com.example.zenbook.networkselection.ActiveMeasurement.Delay.RoundTripTime;
 import com.example.zenbook.networkselection.ActiveMeasurement.EnergyEfficiency.GetEnergyEfficiency;
@@ -48,8 +51,35 @@ public class MainActivity extends Activity {
     
         RANObject ranObject;
         
-        startService();
-        sendNotification();
+        final Button startService = (Button)findViewById(R.id.startService);
+        final Button stopService = (Button)findViewById(R.id.stopService);
+        CheckedTextView powerTutor = (CheckedTextView)findViewById(R.id.checkedTextView);
+        if(!isMyServiceRunning(UMLoggerService.class)){
+            powerTutor.setChecked(false);
+        }else{
+            powerTutor.setChecked(true);
+        }
+        startService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService.setEnabled(false);
+                stopService.setEnabled(true);
+                startService();
+                sendNotification();
+            }
+        });
+        stopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService.setEnabled(true);
+                stopService.setEnabled(false);
+                stopService();
+            }
+        });
+        Toast.makeText(this, "Create again", Toast.LENGTH_LONG).show();
+        
+//        startService();
+//        sendNotification();
         
         
     }

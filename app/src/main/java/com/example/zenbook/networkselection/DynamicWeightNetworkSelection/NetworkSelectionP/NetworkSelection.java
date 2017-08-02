@@ -50,6 +50,14 @@ public class NetworkSelection {
         return NUM;
     }
     
+    public double[] getWeight(){
+        double[] weight = new double[3];
+        weight[0] = selectNetwork.getW_energy();
+        weight[1] = selectNetwork.getW_successRate();
+        weight[2] = selectNetwork.getW_delay();
+        return weight;
+    }
+    
     public int getLoopCount() {
         return loopCount;
     }

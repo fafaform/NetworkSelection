@@ -22,6 +22,8 @@ public class GetWiFi {
     private ArrayList<RANObject> objects = new ArrayList<>();
 //    private RANObject ranObject;
     private int APCount = 0;
+//    private int LinkSpeed = 0;
+//    private String standard = "";
     
     public int getAPCount(){
         return APCount;
@@ -43,7 +45,36 @@ public class GetWiFi {
                     if ((find.SSID).equals(savedSSID)) {
 //                    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                         APCount++;
-                        System.out.println(APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency);
+//                        switch(find.frequency){
+//                            case 2412:
+//                                LinkSpeed = (11 + 54)/2;
+//                                standard = "802.11b/g/n";
+//                                break;
+//                            case 2462:
+//                                LinkSpeed = (11+100)/2;
+//                                standard = "802.11b/n";
+//                                break;
+//                            case 2437:
+//                            case 2484:
+//                                LinkSpeed = 11;
+//                                standard = "802.11b";
+//                                break;
+//                            case 2432:
+//                            case 2452:
+//                            case 2472:
+//                                LinkSpeed = 54;
+//                                standard = "802.11g/n";
+//                                break;
+//                            case 2422:
+//                                LinkSpeed = 100;
+//                                standard = "802.11n";
+//                                break;
+//                            default:
+//                                LinkSpeed = 0;
+//                                standard = "802.11x";
+//                                break;
+//                        }
+                        System.out.println(APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency/1000);
                 
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
@@ -64,7 +95,7 @@ public class GetWiFi {
 //                    ranObject.setRSSi(WifiManager.calculateSignalLevel(find.level, 5) + "");
 
 //                    System.out.println("Signal Level: " + WifiManager.calculateSignalLevel(find.level, 5));
-                        ranObject.setBand(find.frequency + "");
+                        ranObject.setBand((find.frequency/1000) + "");
                         objects.add(ranObject);
                         break;
                     }
@@ -74,6 +105,11 @@ public class GetWiFi {
             APCount = 0;
         }
         if(APCount == 0){
+            if(savedNetwork != null) {
+                System.out.println(savedNetwork.size());
+            }else{
+                System.out.println("savedNetwork is null");
+            }
             System.out.println("Problem now");
         }
     }

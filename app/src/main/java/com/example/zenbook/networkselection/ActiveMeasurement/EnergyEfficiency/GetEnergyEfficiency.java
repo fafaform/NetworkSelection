@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.io.ByteArrayInputStream;
@@ -205,7 +206,14 @@ public class GetEnergyEfficiency {
         power = energy - preEnergy;
         System.out.println("Energy usage (Joule): " + power);
 //        System.out.println("Energy usage (Vary Joule): " + power/(2400*3600)/100);
-        ranObject.setEnergyEfficiency((100 - power/(2400*3600))/100 + "");
+//        ranObject.setEnergyEfficiency((100 - power/(2400*3600))/100 + "");
+        if(power > Global.MAX_ENERGY){
+            ranObject.setEnergyEfficiency("0.0");
+        }else if(power < Global.MIN_ENERGY){
+            ranObject.setEnergyEfficiency("1.0");
+        }else {
+            ranObject.setEnergyEfficiency((power - Global.MIN_ENERGY) / (Global.MIN_ENERGY - Global.MIN_ENERGY) + "");
+        }
     }
     
     

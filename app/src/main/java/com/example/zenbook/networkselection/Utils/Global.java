@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.InetAddress;
@@ -20,9 +21,15 @@ public class Global {
 //    public static String IPAddress = "202.29.148.77";
     public static String IPAddress = "nbtc.ee.psu.ac.th";
 //    public static String IPAddress = "172.31.137.193";
+    public static double MIN_ENERGY = 0.067;
+    public static double MAX_ENERGY = 0.561;
+    public static boolean ALWAYS_DO_ACTIVE = false;
     
     public static File file;
     public static FileOutputStream fileOutputStream;
+    
+//    public static File energyFile;
+//    public static FileOutputStream energyFileOutputStream;
     
     public static Activity activity;
     public static Bundle savedInstanceState;

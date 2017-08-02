@@ -78,6 +78,7 @@ public class PassiveService extends Service {
     public void onCreate() {
         doScanning = true;
         createFile();
+//        createEnergyFile();
     }
     
     @Override
@@ -94,6 +95,12 @@ public class PassiveService extends Service {
         if(!wifiManager.isWifiEnabled()){
 //            System.out.println("Enable");
             wifiManager.setWifiEnabled(true);
+            try {
+                //Wait for wifi to open completely
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }else{
 //            System.out.println("Already Enabled");
         }
@@ -112,16 +119,22 @@ public class PassiveService extends Service {
         intentFilter.addAction(WifiManager.ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE);
 //        registerReceiver(new ScanReceiver(), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 //        registerReceiver(new ScanReceiver(), new IntentFilter(WifiManager.ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE));
-        registerReceiver(new ScanReceiver(){
+//        registerReceiver(
+        ScanReceiver scanReceiver = new ScanReceiver(){
             @Override
             public void onReceive(Context context, Intent intent1){
                 if(doScanning) {
                     doScanning = false;
                     Scanning();
+                    if(Global.ALWAYS_DO_ACTIVE) {
+                        wifiManager.startScan();
+                    }
                 }
             }
-        }, intentFilter);
-        
+        };
+        registerReceiver(scanReceiver, intentFilter);
+
+
 //        if(doScanning) {
 //            doScanning = false;
 //            System.out.println("Time doing scanning");
@@ -170,7 +183,7 @@ public class PassiveService extends Service {
                 e.printStackTrace();
             }
         }else {
-            if(!CELLULAR.getRSSi().equals(cellular.getRss()) || !CELLULAR.getBand().equals(cellular.getNetworkType())) {
+            if((Math.abs(Integer.parseInt(CELLULAR.getRSSi())) - Math.abs(Integer.parseInt(cellular.getRss())) > 9) || !CELLULAR.getBand().equals(cellular.getNetworkType())) {
                 System.out.println("Cellular Changed: " + CELLULAR.getRSSi() + ":" + cellular.getRss() + ", " + CELLULAR.getBand() + ":" + cellular.getNetworkType());
                 calculate = true;
     
@@ -250,7 +263,7 @@ outterloop:
         }
         System.out.println("--------------------------------------------------------------------------");
     
-        if(calculate){
+        if(calculate || Global.ALWAYS_DO_ACTIVE){
             SAVEDDATA = new ArrayList<>();
             CELLULAR = new RANObject();
             
@@ -371,6 +384,8 @@ outterloop:
                 System.out.println("---------------------------------------------------------------");
         
                 //TODO: Write to file
+                String energyTo = wifiManager.getConnectionInfo().getSSID() + "," + getEnergyEfficiency.getJoule() + "\n";
+                
                 String writeTo = "---------------------------------------------------------------" + "\n";
                 writeTo += wifiManager.getConnectionInfo().getSSID() + "\n";
                 writeTo += "Energy Usage (Joule): " + getEnergyEfficiency.getJoule() + "\n";
@@ -383,6 +398,10 @@ outterloop:
                     Global.fileOutputStream.write((writeTo).getBytes());
                     Global.fileOutputStream.write("\n".getBytes());
                     Global.fileOutputStream.close();
+                    
+//                    Global.energyFileOutputStream = new FileOutputStream(Global.energyFile, true);
+//                    Global.energyFileOutputStream.write(energyTo.getBytes());
+//                    Global.energyFileOutputStream.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -454,6 +473,8 @@ outterloop:
                 System.out.println("Delay: " + CELLULAR.getDelay());
                 System.out.println("---------------------------------------------------------------");
                 //TODO: Write to file
+                String energyTo = CELLULAR.getSSID() + "," + getEnergyEfficiency.getJoule() + "\n";
+                
                 String writeTo = "---------------------------------------------------------------" + "\n";
                 writeTo += CELLULAR.getSSID() + "\n";
                 writeTo += "Energy Usage (Joule): " + getEnergyEfficiency.getJoule() + "\n";
@@ -466,6 +487,10 @@ outterloop:
                     Global.fileOutputStream.write((writeTo).getBytes());
                     Global.fileOutputStream.write("\n".getBytes());
                     Global.fileOutputStream.close();
+    
+//                    Global.energyFileOutputStream = new FileOutputStream(Global.energyFile, true);
+//                    Global.energyFileOutputStream.write(energyTo.getBytes());
+//                    Global.energyFileOutputStream.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -523,6 +548,8 @@ outterloop:
             //TODO: Network Selection Start Here
             SAVEDDATA.add(0, CELLULAR);
             SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
+            double[] weight = selectNetwork.getWeight();
+            //if not cellular
             if (!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("Cellular")) {
                 wifiManager.setWifiEnabled(true);
                 List<ScanResult> scanResults = wifiManager.getScanResults();
@@ -538,11 +565,13 @@ outterloop:
                     String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
                     if (SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals(save)) {
                         System.out.println("Selected Network: " + save);
-                
+                        System.out.println("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]);
                         //TODO: Write to file
                         try {
                             Global.fileOutputStream = new FileOutputStream(Global.file, true);
                             Global.fileOutputStream.write(("Selected Network: " + save).getBytes());
+                            Global.fileOutputStream.write("\n".getBytes());
+                            Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
                         } catch (FileNotFoundException e) {
@@ -561,6 +590,22 @@ outterloop:
                 }
             } else {
                 wifiManager.setWifiEnabled(false);
+                System.out.println("Selected Network: cellular");
+                System.out.println("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]);
+                //TODO: Write to file
+                try {
+                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                    Global.fileOutputStream.write(("Selected Network: cellular").getBytes());
+                    Global.fileOutputStream.write("\n".getBytes());
+                    Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
+                    Global.fileOutputStream.write("\n".getBytes());
+                    Global.fileOutputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //TODO: End Write to File
             }
         }catch (Exception e){
             return;
@@ -573,7 +618,7 @@ outterloop:
 //            System.out.println("Created Folder");
             File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
             dir.mkdirs();
-            Global.file = new File(externalD, "์์NetworkSelection.txt");
+            Global.file = new File(externalD, "NetworkSelection.txt");
             try {
                 Global.file.createNewFile();
                 Global.fileOutputStream = new FileOutputStream(Global.file,false);
@@ -583,9 +628,9 @@ outterloop:
             }
         }else{
 //            System.out.println("Already have folder: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
-            if(!new File(externalD + "์์NetworkSelection.txt").exists()){
+            if(!new File(externalD + "NetworkSelection.txt").exists()){
 //                System.out.println("Created File");
-                Global.file = new File(externalD, "์์NetworkSelection.txt");
+                Global.file = new File(externalD, "NetworkSelection.txt");
                 try {
                     Global.file.createNewFile();
                     Global.fileOutputStream = new FileOutputStream(Global.file,false);
@@ -597,6 +642,36 @@ outterloop:
             }
         }
     }
+//    private void createEnergyFile(){
+//        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//        if (!externalD.exists()) {
+////            System.out.println("Created Folder");
+//            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
+//            dir.mkdirs();
+//            Global.energyFile = new File(externalD, "Energy.txt");
+//            try {
+//                Global.energyFile.createNewFile();
+//                Global.energyFileOutputStream = new FileOutputStream(Global.energyFile,false);
+//                Global.energyFileOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+////            System.out.println("Already have folder: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//            if(!new File(externalD + "Energy.txt").exists()){
+////                System.out.println("Created File");
+//                Global.energyFile = new File(externalD, "Energy.txt");
+//                try {
+//                    Global.energyFile.createNewFile();
+//                    Global.energyFileOutputStream = new FileOutputStream(Global.energyFile,false);
+//                    Global.energyFileOutputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+////                System.out.println(file.exists());
+//            }
+//        }
+//    }
     
     private class ScanReceiver extends BroadcastReceiver {
         @Override
