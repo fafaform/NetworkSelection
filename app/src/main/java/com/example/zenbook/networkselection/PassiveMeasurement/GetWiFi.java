@@ -81,6 +81,11 @@ public class GetWiFi {
                             Global.fileOutputStream.write((APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency).getBytes());
                             Global.fileOutputStream.write("\n".getBytes());
                             Global.fileOutputStream.close();
+                            
+//                            Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
+//                            Global.resultFileOutputStream.write((find.SSID + "," + find.level + "," + find.frequency/1000).getBytes());
+//                            Global.resultFileOutputStream.write("\n".getBytes());
+//                            Global.resultFileOutputStream.close();
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -110,7 +115,7 @@ public class GetWiFi {
             }else{
                 System.out.println("savedNetwork is null");
             }
-            System.out.println("Problem now");
+            System.out.println("no KNOWN network");
         }
     }
 }

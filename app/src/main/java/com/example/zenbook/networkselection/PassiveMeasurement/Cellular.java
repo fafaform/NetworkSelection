@@ -52,147 +52,172 @@ public class Cellular {
     }
     
     public Cellular(){
-        //TODO: Cellular part
-        TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        WifiManager wifiManager = (WifiManager) Global.activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        try {
+            //TODO: Cellular part
+            TelephonyManager telephonyManager = (TelephonyManager) Global.activity.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 
-        if(telephonyManager.getSimState() != TelephonyManager.SIM_STATE_ABSENT && isCellularEnable()) {
-//            while(telephonyManager.getDataState() != TelephonyManager.DATA_CONNECTED){
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            System.out.println("SIM Available and cellular available");
-            ConnectivityManager manager = (ConnectivityManager) Global.activity.getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = null;
-            if (manager != null) {
-                // TODO: 9/18/2016 For API 17+
-                rss = 0;
-                rssi = 0;
-                networkType = "";
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_LTE) {
-                        CellInfoLte cellinfogsm = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
-                        CellSignalStrengthLte cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                        CellIdentityLte cellIdentityLte = cellinfogsm.getCellIdentity();
+            if (telephonyManager.getSimState() != TelephonyManager.SIM_STATE_ABSENT) {
+                ConnectivityManager manager = (ConnectivityManager) Global.activity.getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = null;
+                if (manager != null) {
+                    // TODO: 9/18/2016 For API 17+
+                    rss = 0;
+                    rssi = 0;
+                    networkType = "";
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_LTE) {
+                            CellInfoLte cellinfogsm = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthLte cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityLte cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCi()+"";
-                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
-                        rssi = cellSignalStrengthLte.getDbm();
-                        networkType = telephonyManager.getNetworkType() + "";
-                        System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: LTE");
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println("MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac());
-                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_UMTS) {
-                        CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
-                        CellSignalStrengthWcdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                        CellIdentityWcdma cellIdentityLte = cellinfogsm.getCellIdentity();
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: LTE");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac());
+                        } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_UMTS) {
+                            CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthWcdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityWcdma cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
-                        rssi = cellSignalStrengthLte.getDbm();
-                        networkType = telephonyManager.getNetworkType() + "";
-                        System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UMTS");
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(cellinfogsm.getCellIdentity().getCid());
-                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_CDMA) {
-                        CellInfoCdma cellinfogsm = (CellInfoCdma) telephonyManager.getAllCellInfo().get(0);
-                        CellSignalStrengthCdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                        CellIdentityCdma cellIdentityLte = cellinfogsm.getCellIdentity();
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UMTS");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(cellinfogsm.getCellIdentity().getCid());
+                        } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_CDMA) {
+                            CellInfoCdma cellinfogsm = (CellInfoCdma) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthCdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityCdma cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getBasestationId()+"";
-                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
-                        rssi = cellSignalStrengthLte.getDbm();
-                        networkType = telephonyManager.getNetworkType() + "";
-                        System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: CDMA");
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(cellinfogsm.getCellIdentity().getBasestationId());
-                    } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_EDGE) {
-                        CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
-                        CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                        CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: CDMA");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(cellinfogsm.getCellIdentity().getBasestationId());
+                        } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_EDGE) {
+                            CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
-                        rssi = cellSignalStrengthLte.getDbm();
-                        networkType = telephonyManager.getNetworkType() + "";
-                        System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: EDGE");
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(cellinfogsm.getCellIdentity().getCid());
-                    } else {
-                        CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
-                        CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
-                        CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: EDGE");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(cellinfogsm.getCellIdentity().getCid());
+                        }else if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_HSDPA){
+                            CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthWcdma cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityWcdma cellIdentityLte = cellinfogsm.getCellIdentity();
 //                    cid = cellIdentityLte.getCid()+"";
-                        rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
-                        rssi = cellSignalStrengthLte.getDbm();
-                        networkType = telephonyManager.getNetworkType() + "";
-                        System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(cellinfogsm.getCellIdentity().getCid());
+                        } else {
+                            CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
+                            CellSignalStrengthGsm cellSignalStrengthLte = cellinfogsm.getCellSignalStrength();
+                            CellIdentityGsm cellIdentityLte = cellinfogsm.getCellIdentity();
+//                    cid = cellIdentityLte.getCid()+"";
+                            rss = Double.parseDouble(cellSignalStrengthLte.getLevel() + "");
+                            rssi = cellSignalStrengthLte.getDbm();
+                            networkType = telephonyManager.getNetworkType() + "";
+                            System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
+                            try {
+                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+                                Global.fileOutputStream.write("\n".getBytes());
+                                Global.fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(cellinfogsm.getCellIdentity().getCid());
                         }
-                        System.out.println(cellinfogsm.getCellIdentity().getCid());
+                
                     }
-    
-                }
-                ranObject = new RANObject();
-                ranObject.setSSID("Cellular");
-                ranObject.setRSSi(rssi + "");
-                ranObject.setBand(telephonyManager.getNetworkType() + "");
-            } else {
+                    ranObject = new RANObject();
+                    ranObject.setSSID("Cellular");
+                    ranObject.setRSSi(rssi + "");
+                    ranObject.setBand(telephonyManager.getNetworkType() + "");
+//                    try {
+//                        Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
+//                        Global.resultFileOutputStream.write(("Cellular" + "," + rssi + "," + telephonyManager.getNetworkType()).getBytes());
+//                        Global.resultFileOutputStream.write("\n".getBytes());
+//                        Global.resultFileOutputStream.close();
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+                } else {
 //                System.out.println("CELLULAR NOT CONNECT");
-                ranObject = new RANObject();
-                ranObject.setSSID("Cellular");
-                ranObject.setRSSi("0");
-                ranObject.setBand("0");
+                    ranObject = new RANObject();
+                    ranObject.setSSID("Cellular");
+                    ranObject.setRSSi("0");
+                    ranObject.setBand("0");
+                }
+            } else {
+//                ranObject = new RANObject();
+//                ranObject.setSSID("Cellular");
+//                ranObject.setRSSi("0");
+//                ranObject.setBand("0");
+            System.out.println("SIM STATE ABSENT or UNKNOWN");
             }
-        }else{
-            ranObject = new RANObject();
-            ranObject.setSSID("Cellular");
-            ranObject.setRSSi("0");
-            ranObject.setBand("0");
-//            System.out.println("SIM STATE ABSENT");
+        }catch (NullPointerException e){
+//            e.printStackTrace();
         }
     }
     

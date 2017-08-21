@@ -15,6 +15,7 @@ public class SelectNetwork {
     
     public SelectNetwork(ArrayList<RANObject> objects) {
         
+        this.objects = objects;
         ArrayList<RadioAccessNetwork> rans = new ArrayList<>();
         RadioAccessNetwork ran;
         
@@ -30,7 +31,7 @@ public class SelectNetwork {
     
         network = new NetworkSelection(rans);
         
-        System.out.println("Select network number: "+network.getSelectNetwork());
+        System.out.println("Select network number: " + network.getSelectNetwork() + " : " + objects.get(network.getSelectNetwork()).getSSID());
     }
     public int getRANObject(){
 //        System.out.println("Again: "+network.getSelectNetwork());

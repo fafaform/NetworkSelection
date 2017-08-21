@@ -28,8 +28,11 @@ public class Global {
     public static File file;
     public static FileOutputStream fileOutputStream;
     
-//    public static File energyFile;
-//    public static FileOutputStream energyFileOutputStream;
+    public static File logFile;
+    public static FileOutputStream logFileOutputStream;
+    
+    public static File resultFile;
+    public static FileOutputStream resultFileOutputStream;
     
     public static Activity activity;
     public static Bundle savedInstanceState;

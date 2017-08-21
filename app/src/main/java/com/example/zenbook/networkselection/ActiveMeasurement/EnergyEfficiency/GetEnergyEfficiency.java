@@ -174,7 +174,7 @@ public class GetEnergyEfficiency {
             multiplyer = 1;
         } else {
             prefix = "m";
-            multiplyer = 1/1000;
+            multiplyer = 0.001;
         }
 //        long secs = (long)Math.round(uidInfo.runtime);
     
@@ -212,7 +212,8 @@ public class GetEnergyEfficiency {
         }else if(power < Global.MIN_ENERGY){
             ranObject.setEnergyEfficiency("1.0");
         }else {
-            ranObject.setEnergyEfficiency((power - Global.MIN_ENERGY) / (Global.MIN_ENERGY - Global.MIN_ENERGY) + "");
+            System.out.println(1 - (power - Global.MIN_ENERGY) / (Global.MAX_ENERGY - Global.MIN_ENERGY));
+            ranObject.setEnergyEfficiency(1 - ((power - Global.MIN_ENERGY) / (Global.MAX_ENERGY - Global.MIN_ENERGY)) + "");
         }
     }
     
