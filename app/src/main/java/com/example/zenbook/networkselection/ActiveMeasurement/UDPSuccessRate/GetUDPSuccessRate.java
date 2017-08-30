@@ -1,5 +1,6 @@
 package com.example.zenbook.networkselection.ActiveMeasurement.UDPSuccessRate;
 
+import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.net.DatagramSocket;
@@ -12,7 +13,7 @@ import java.text.DecimalFormat;
 
 public class GetUDPSuccessRate {
     
-    private static int number_of_packet = 100;
+//    private static int number_of_packet = 100;
     private static int number_of_data_per_packet = 1;
     private static int time_for_another_packet_in_millisecond = 1;
     private static int time_before_end_in_millisecond = 1000;
@@ -53,7 +54,7 @@ public class GetUDPSuccessRate {
         receive = new Thread(serverAsync);
         receive.start();
     
-        int number = number_of_packet;
+        int number = Global.number_of_udp_packet;
         int count = 0;
         String sendingMessage = "";
         for (int i = 0; i < number; i++) {

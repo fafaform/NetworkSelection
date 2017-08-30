@@ -16,7 +16,7 @@ public class RoundTripTime {
     private static int PING_PACKET_SIZE = 32;
     private static int NUMBER_OF_PING = 1;
     private static int WAITING_TIME_MILLISECOND = 1000;
-    private static int DELAY_TH = 250;
+//    private static int DELAY_TH = 250;
 //    private static int DELAY_TH = 500;
     
     private boolean start = true;
@@ -38,7 +38,7 @@ public class RoundTripTime {
             } else {
                 start = false;
                 if(avg != null) {
-                    ranObject.setDelay((round(Math.abs(Math.min(0, (avg - DELAY_TH) / DELAY_TH)), 4) + ""));
+                    ranObject.setDelay((round(Math.abs(Math.min(0, (avg - Global.DELAY_TH) / Global.DELAY_TH)), 4) + ""));
                 }else ranObject.setDelay(0 + "");
             }
             if (count < NUMBER_OF_PING) {

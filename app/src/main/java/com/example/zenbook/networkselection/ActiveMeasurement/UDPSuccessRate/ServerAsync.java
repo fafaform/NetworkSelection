@@ -1,5 +1,6 @@
 package com.example.zenbook.networkselection.ActiveMeasurement.UDPSuccessRate;
 
+import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ServerAsync implements Runnable {
         try {
 //            datagramSocket.setSoTimeout(60000);
             datagramSocket.setSoTimeout(10000);
+//            datagramSocket.setSoTimeout(20000);
 
 //            byte[] receiveData = new byte[1024];
             byte[] receiveData = new byte[32];
@@ -43,7 +45,8 @@ public class ServerAsync implements Runnable {
 //            Global.lossRate++;
 //            if(message.equals(Global.lossRate+"")) {
 //                System.out.println("RECEIVED: " + message);
-            ranObject.setUDPSuccessRate((double)(Integer.parseInt(message)-1)/100 + "");
+//            System.out.println((Integer.parseInt(message)-1) + "");
+            ranObject.setUDPSuccessRate((double)(Integer.parseInt(message)-1)/(Global.number_of_udp_packet) + "");
 //            }else{
 //                System.err.println("RECEIVED: " + message);
 //                Global.lossRate = Integer.parseInt(message)-1;

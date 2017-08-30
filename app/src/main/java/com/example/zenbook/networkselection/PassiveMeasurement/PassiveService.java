@@ -361,6 +361,11 @@ outterloop:
                             Global.resultFileOutputStream.write(("Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60)).getBytes());
                             Global.resultFileOutputStream.write("\n\n".getBytes());
                             Global.resultFileOutputStream.close();
+    
+//                            Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                            Global.logFileOutputStream.write(("Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60)).getBytes());
+//                            Global.logFileOutputStream.write("\n".getBytes());
+//                            Global.logFileOutputStream.close();
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -374,16 +379,16 @@ outterloop:
             }
         }catch(Exception e){
             e.printStackTrace();
-            try {
-                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                Global.logFileOutputStream.write(e.getMessage().getBytes());
-                Global.logFileOutputStream.write("\n".getBytes());
-                Global.logFileOutputStream.close();
-            } catch (FileNotFoundException fe) {
-                fe.printStackTrace();
-            } catch (IOException ie) {
-                ie.printStackTrace();
-            }
+//            try {
+//                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                Global.logFileOutputStream.write(e.getMessage().getBytes());
+//                Global.logFileOutputStream.write("\n".getBytes());
+//                Global.logFileOutputStream.close();
+//            } catch (FileNotFoundException fe) {
+//                fe.printStackTrace();
+//            } catch (IOException ie) {
+//                ie.printStackTrace();
+//            }
             doScanning = true;
             return;
         }
@@ -431,6 +436,7 @@ outterloop:
                 boolean connected = true;
                 int loop = 0;
                 System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
+//                String connected
                 while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1, wifiManager.getConnectionInfo().getSSID().length() - 1).equals(ranObject.getSSID())) {
                     loop++;
                     System.out.println(loop);

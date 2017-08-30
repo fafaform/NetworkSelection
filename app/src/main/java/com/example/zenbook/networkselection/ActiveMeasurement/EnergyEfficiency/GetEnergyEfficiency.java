@@ -23,6 +23,8 @@ import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
@@ -205,6 +207,17 @@ public class GetEnergyEfficiency {
         power = 0.0;
         power = energy - preEnergy;
         System.out.println("Energy usage (Joule): " + power);
+    
+//        try {
+//            Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//            Global.logFileOutputStream.write((power + ",").getBytes());
+//            Global.logFileOutputStream.write("\n".getBytes());
+//            Global.logFileOutputStream.close();
+//        } catch (FileNotFoundException fe) {
+//            fe.printStackTrace();
+//        } catch (IOException ie) {
+//            ie.printStackTrace();
+//        }
 //        System.out.println("Energy usage (Vary Joule): " + power/(2400*3600)/100);
 //        ranObject.setEnergyEfficiency((100 - power/(2400*3600))/100 + "");
         if(power > Global.MAX_ENERGY){

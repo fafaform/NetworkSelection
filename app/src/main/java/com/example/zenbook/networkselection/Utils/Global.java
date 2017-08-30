@@ -22,8 +22,10 @@ public class Global {
     public static String IPAddress = "nbtc.ee.psu.ac.th";
 //    public static String IPAddress = "172.31.137.193";
     public static double MIN_ENERGY = 0.067;
-    public static double MAX_ENERGY = 0.561;
+    public static double MAX_ENERGY = 0.694;
     public static boolean ALWAYS_DO_ACTIVE = false;
+    public static int number_of_udp_packet = 100;
+    public static int DELAY_TH = 250;
     
     public static File file;
     public static FileOutputStream fileOutputStream;
