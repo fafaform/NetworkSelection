@@ -26,8 +26,8 @@ public class ServerAsync implements Runnable {
     @Override
     public void run() {
         try {
-//            datagramSocket.setSoTimeout(60000);
-            datagramSocket.setSoTimeout(10000);
+            datagramSocket.setSoTimeout(60000);
+//            datagramSocket.setSoTimeout(10000);
 //            datagramSocket.setSoTimeout(20000);
 
 //            byte[] receiveData = new byte[1024];

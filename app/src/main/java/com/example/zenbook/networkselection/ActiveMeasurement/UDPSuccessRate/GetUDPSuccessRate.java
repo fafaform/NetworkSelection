@@ -15,7 +15,9 @@ public class GetUDPSuccessRate {
     
 //    private static int number_of_packet = 100;
     private static int number_of_data_per_packet = 1;
-    private static int time_for_another_packet_in_millisecond = 1;
+    private static int time_for_another_packet_in_millisecond = 0;
+//    private static int time_for_another_packet_in_nanosecond = 1000;
+    private static int time_for_another_packet_in_nanosecond = 1;
     private static int time_before_end_in_millisecond = 1000;
     
     public GetUDPSuccessRate(RANObject ranObject) {
@@ -96,7 +98,7 @@ public class GetUDPSuccessRate {
         }
         try {
             receive.join();
-            Thread.sleep(time_for_another_packet_in_millisecond);
+            Thread.sleep(time_for_another_packet_in_millisecond, time_for_another_packet_in_nanosecond);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

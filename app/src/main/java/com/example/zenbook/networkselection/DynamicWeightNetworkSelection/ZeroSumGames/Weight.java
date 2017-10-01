@@ -20,7 +20,7 @@ public class Weight {
     }
 
     public void setW_energy(double w_energy) {
-        this.w_energy = w_energy;
+        this.w_energy = (double)Math.round(w_energy * 10000d) / 10000d;
     }
 
     public double getW_successRate() {
@@ -28,7 +28,7 @@ public class Weight {
     }
 
     public void setW_successRate(double w_successRate) {
-        this.w_successRate = w_successRate;
+        this.w_successRate = (double)Math.round(w_successRate * 10000d) / 10000d;
     }
 
     public double getW_delay() {
@@ -36,7 +36,7 @@ public class Weight {
     }
 
     public void setW_delay(double w_delay) {
-        this.w_delay = w_delay;
+        this.w_delay = (double)Math.round(w_delay * 10000d) / 10000d;
     }
 //</editor-fold>
 }

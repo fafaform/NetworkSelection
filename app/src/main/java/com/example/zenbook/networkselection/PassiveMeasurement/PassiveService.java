@@ -77,9 +77,10 @@ public class PassiveService extends Service {
     @Override
     public void onCreate() {
         doScanning = true;
-        createFile();
+//        createFile();
         createLogFile();
         createResultFile();
+//        createEnergyFile();
     }
     
     @Override
@@ -152,16 +153,16 @@ public class PassiveService extends Service {
 //        processingTime = dateFormat.getCalendar();
             processingTime = dateFormat.getCalendar().getTime().getTime();
             Date date = new Date();
-            try {
-                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                Global.fileOutputStream.write((dateFormat.format(date) + "+++++++++++++++++++++++++++++++++++++++++++++++").getBytes());
-                Global.fileOutputStream.write("\n".getBytes());
-                Global.fileOutputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                Global.fileOutputStream.write((dateFormat.format(date) + "+++++++++++++++++++++++++++++++++++++++++++++++").getBytes());
+//                Global.fileOutputStream.write("\n".getBytes());
+//                Global.fileOutputStream.close();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             //TODO: End Start text Write to File
             System.out.println("--------------------------------------------------------------------------");
             //TODO: Cellular part
@@ -175,10 +176,10 @@ public class PassiveService extends Service {
                 calculate = true;
                 
                 try {
-                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                    Global.fileOutputStream.write(("SAVE NEW SAVED DATA").getBytes());
-                    Global.fileOutputStream.write("\n".getBytes());
-                    Global.fileOutputStream.close();
+//                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                    Global.fileOutputStream.write(("SAVE NEW SAVED DATA").getBytes());
+//                    Global.fileOutputStream.write("\n".getBytes());
+//                    Global.fileOutputStream.close();
     
                     Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                     Global.resultFileOutputStream.write(("SAVE NEW SAVED DATA").getBytes());
@@ -196,10 +197,10 @@ public class PassiveService extends Service {
                     calculate = true;
                     
                     try {
-                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                        Global.fileOutputStream.write(("Cellular Added").getBytes());
-                        Global.fileOutputStream.write("\n".getBytes());
-                        Global.fileOutputStream.close();
+//                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                        Global.fileOutputStream.write(("Cellular Added").getBytes());
+//                        Global.fileOutputStream.write("\n".getBytes());
+//                        Global.fileOutputStream.close();
     
                         Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                         Global.resultFileOutputStream.write(("Cellular Added").getBytes());
@@ -216,10 +217,10 @@ public class PassiveService extends Service {
                     calculate = true;
                     
                     try {
-                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                        Global.fileOutputStream.write(("Cellular Removed").getBytes());
-                        Global.fileOutputStream.write("\n".getBytes());
-                        Global.fileOutputStream.close();
+//                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                        Global.fileOutputStream.write(("Cellular Removed").getBytes());
+//                        Global.fileOutputStream.write("\n".getBytes());
+//                        Global.fileOutputStream.close();
     
                         Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                         Global.resultFileOutputStream.write(("Cellular Removed").getBytes());
@@ -237,10 +238,10 @@ public class PassiveService extends Service {
                         calculate = true;
                         
                         try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("Cellular Changed: " + CELLULAR.getRSSi() + ":" + cellular.getRss() + ", " + CELLULAR.getBand() + ":" + cellular.getNetworkType()).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
+//                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                            Global.fileOutputStream.write(("Cellular Changed: " + CELLULAR.getRSSi() + ":" + cellular.getRss() + ", " + CELLULAR.getBand() + ":" + cellular.getNetworkType()).getBytes());
+//                            Global.fileOutputStream.write("\n".getBytes());
+//                            Global.fileOutputStream.close();
                             
                             Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                             Global.resultFileOutputStream.write(("Cellular Changed").getBytes());
@@ -262,10 +263,10 @@ outterloop:
                                 calculate = true;
                                 
                                 try {
-                                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                    Global.fileOutputStream.write(("AP count change (from, to): " + "(" + APCOUNT + ", " + getWiFi.getAPCount() + ")").getBytes());
-                                    Global.fileOutputStream.write("\n".getBytes());
-                                    Global.fileOutputStream.close();
+//                                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                    Global.fileOutputStream.write(("AP count change (from, to): " + "(" + APCOUNT + ", " + getWiFi.getAPCount() + ")").getBytes());
+//                                    Global.fileOutputStream.write("\n".getBytes());
+//                                    Global.fileOutputStream.close();
                                     
                                     Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                                     Global.resultFileOutputStream.write(("AP count change").getBytes());
@@ -287,10 +288,10 @@ outterloop:
                                     calculate = true;
                                     
                                     try {
-                                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                        Global.fileOutputStream.write(("RSSi change too much of: " + currentData.getSSID()).getBytes());
-                                        Global.fileOutputStream.write("\n".getBytes());
-                                        Global.fileOutputStream.close();
+//                                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                        Global.fileOutputStream.write(("RSSi change too much of: " + currentData.getSSID()).getBytes());
+//                                        Global.fileOutputStream.write("\n".getBytes());
+//                                        Global.fileOutputStream.close();
     
                                         Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                                         Global.resultFileOutputStream.write(("RSSi change too much of").getBytes());
@@ -309,10 +310,10 @@ outterloop:
                                     calculate = true;
                                     
                                     try {
-                                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                        Global.fileOutputStream.write(("Band change of: " + currentData.getSSID()).getBytes());
-                                        Global.fileOutputStream.write("\n".getBytes());
-                                        Global.fileOutputStream.close();
+//                                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                        Global.fileOutputStream.write(("Band change of: " + currentData.getSSID()).getBytes());
+//                                        Global.fileOutputStream.write("\n".getBytes());
+//                                        Global.fileOutputStream.close();
     
                                         Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                                         Global.resultFileOutputStream.write(("Band change of").getBytes());
@@ -352,10 +353,10 @@ outterloop:
                         Date date = new Date();
                         System.out.println("Processing Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60));
                         try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("Processing Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60) + "\n" + dateFormat.format(date) + "+++++++++++++++++++++++++++++++++++++++++++++++").getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
+//                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                            Global.fileOutputStream.write(("Processing Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60) + "\n" + dateFormat.format(date) + "+++++++++++++++++++++++++++++++++++++++++++++++").getBytes());
+//                            Global.fileOutputStream.write("\n".getBytes());
+//                            Global.fileOutputStream.close();
     
                             Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                             Global.resultFileOutputStream.write(("Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60)).getBytes());
@@ -437,6 +438,7 @@ outterloop:
                 int loop = 0;
                 System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
 //                String connected
+//                while (!wifiManager.getConnectionInfo().getSSID().substring(1, wifiManager.getConnectionInfo().getSSID().length() - 1).equals(ranObject.getSSID())) {
                 while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1, wifiManager.getConnectionInfo().getSSID().length() - 1).equals(ranObject.getSSID())) {
                     loop++;
                     System.out.println(loop);
@@ -521,10 +523,10 @@ outterloop:
                     writeTo += "Delay: " + ranObject.getDelay() + "\n";
                     writeTo += "---------------------------------------------------------------";
                     try {
-                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                        Global.fileOutputStream.write((writeTo).getBytes());
-                        Global.fileOutputStream.write("\n".getBytes());
-                        Global.fileOutputStream.close();
+//                        Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                        Global.fileOutputStream.write((writeTo).getBytes());
+//                        Global.fileOutputStream.write("\n".getBytes());
+//                        Global.fileOutputStream.close();
     
                         Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                         Global.resultFileOutputStream.write((ranObject.getSSID() + "," + ranObject.getRSSi() + "," + ranObject.getBand() + "," + ranObject.getEnergyEfficiency() + "," + ranObject.getUDPSuccessRate() + "," + ranObject.getDelay()).getBytes());
@@ -629,10 +631,10 @@ outterloop:
                 writeTo += "Delay: " + CELLULAR.getDelay() + "\n";
                 writeTo += "---------------------------------------------------------------";
                 try {
-                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                    Global.fileOutputStream.write((writeTo).getBytes());
-                    Global.fileOutputStream.write("\n".getBytes());
-                    Global.fileOutputStream.close();
+//                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                    Global.fileOutputStream.write((writeTo).getBytes());
+//                    Global.fileOutputStream.write("\n".getBytes());
+//                    Global.fileOutputStream.close();
     
                     Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                     Global.resultFileOutputStream.write((CELLULAR.getSSID() + "," + CELLULAR.getRSSi() + "," + CELLULAR.getBand() + "," + CELLULAR.getEnergyEfficiency() + "," + CELLULAR.getUDPSuccessRate() + "," + CELLULAR.getDelay()).getBytes());
@@ -724,12 +726,12 @@ outterloop:
                         System.out.println("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]);
                         //TODO: Write to file
                         try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write(("Selected Network: " + save).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
+//                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                            Global.fileOutputStream.write(("Selected Network: " + save).getBytes());
+//                            Global.fileOutputStream.write("\n".getBytes());
+//                            Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
+//                            Global.fileOutputStream.write("\n".getBytes());
+//                            Global.fileOutputStream.close();
     
                             Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                             Global.resultFileOutputStream.write(("Selected Network: " + save).getBytes());
@@ -757,12 +759,12 @@ outterloop:
                 System.out.println("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]);
                 //TODO: Write to file
                 try {
-                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                    Global.fileOutputStream.write(("Selected Network: cellular").getBytes());
-                    Global.fileOutputStream.write("\n".getBytes());
-                    Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
-                    Global.fileOutputStream.write("\n".getBytes());
-                    Global.fileOutputStream.close();
+//                    Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                    Global.fileOutputStream.write(("Selected Network: cellular").getBytes());
+//                    Global.fileOutputStream.write("\n".getBytes());
+//                    Global.fileOutputStream.write(("W_e: " + weight[0] + ", W_s: " + weight[1] + ", W_d: " + weight[2]).getBytes());
+//                    Global.fileOutputStream.write("\n".getBytes());
+//                    Global.fileOutputStream.close();
     
                     Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                     Global.resultFileOutputStream.write(("Selected Network: Cellular").getBytes());
@@ -795,39 +797,39 @@ outterloop:
         }
     }
     
-    private void createFile(){
-        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
-        if (!externalD.exists()) {
-//            System.out.println("Created Folder");
-            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
-            dir.mkdirs();
-            Global.file = new File(externalD, "NetworkSelection.txt");
-            try {
-                Global.file.createNewFile();
-                Global.fileOutputStream = new FileOutputStream(Global.file,false);
-                Global.fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-//            System.out.println("Already have folder: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
-            File file = new File(externalD, "NetworkSelection.txt");
-            if(!file.exists()){
-                System.out.println("Created File");
-                Global.file = new File(externalD, "NetworkSelection.txt");
-                try {
-                    Global.file.createNewFile();
-                    Global.fileOutputStream = new FileOutputStream(Global.file,false);
-                    Global.fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//                System.out.println(file.exists());
-            }else{
-                Global.file = file;
-            }
-        }
-    }
+//    private void createFile(){
+//        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//        if (!externalD.exists()) {
+////            System.out.println("Created Folder");
+//            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
+//            dir.mkdirs();
+//            Global.file = new File(externalD, "NetworkSelection.txt");
+//            try {
+//                Global.file.createNewFile();
+//                Global.fileOutputStream = new FileOutputStream(Global.file,false);
+//                Global.fileOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+////            System.out.println("Already have folder: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//            File file = new File(externalD, "NetworkSelection.txt");
+//            if(!file.exists()){
+//                System.out.println("Created File");
+//                Global.file = new File(externalD, "NetworkSelection.txt");
+//                try {
+//                    Global.file.createNewFile();
+//                    Global.fileOutputStream = new FileOutputStream(Global.file,false);
+//                    Global.fileOutputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+////                System.out.println(file.exists());
+//            }else{
+//                Global.file = file;
+//            }
+//        }
+//    }
     private void createLogFile(){
         File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
         if (!externalD.exists()) {
@@ -886,6 +888,36 @@ outterloop:
             }
         }
     }
+    
+//    private void createEnergyFile(){
+//        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//        if (!externalD.exists()) {
+//            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
+//            dir.mkdirs();
+//            Global.energyFile = new File(externalD, "Energy.txt");
+//            try {
+//                Global.energyFile.createNewFile();
+//                Global.energyFileOutputStream = new FileOutputStream(Global.energyFile,false);
+//                Global.energyFileOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+//            File result = new File(externalD, "Energy.txt");
+//            if(!result.exists()){
+//                Global.energyFile = new File(externalD, "Energy.txt");
+//                try {
+//                    Global.energyFile.createNewFile();
+//                    Global.energyFileOutputStream = new FileOutputStream(Global.energyFile,false);
+//                    Global.energyFileOutputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }else{
+//                Global.energyFile = result;
+//            }
+//        }
+//    }
     
     private class ScanReceiver extends BroadcastReceiver {
         @Override

@@ -15,9 +15,11 @@ public class Minimum implements Comparable<Minimum> {
     private double result;
     private boolean minimum;
     public Minimum(int ransNo, int outcome, double result, boolean minimum) {
+        
         this.ransNo = ransNo;
         this.outcome = outcome;
-        this.result = result;
+        this.result = (double)Math.round(result * 10000d) / 10000d;;
+//        this.result = result;
         this.minimum = minimum;
     }
 
