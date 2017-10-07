@@ -76,21 +76,21 @@ public class GetWiFi {
 //                        }
                         System.out.println(APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency/1000);
                 
-                        try {
-                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                            Global.fileOutputStream.write((APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency).getBytes());
-                            Global.fileOutputStream.write("\n".getBytes());
-                            Global.fileOutputStream.close();
+//                        try {
+//                            Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                            Global.fileOutputStream.write((APCount + ": " + find.SSID + " " + "// RSSi: " + find.level + ":" + WifiManager.calculateSignalLevel(find.level, 5) + "// BAND: " + find.frequency).getBytes());
+//                            Global.fileOutputStream.write("\n".getBytes());
+//                            Global.fileOutputStream.close();
                             
 //                            Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
 //                            Global.resultFileOutputStream.write((find.SSID + "," + find.level + "," + find.frequency/1000).getBytes());
 //                            Global.resultFileOutputStream.write("\n".getBytes());
 //                            Global.resultFileOutputStream.close();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
                 
                         RANObject ranObject = new RANObject();
                         ranObject.setSSID(find.SSID);

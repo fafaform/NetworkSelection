@@ -4,6 +4,8 @@ import com.example.zenbook.networkselection.Utils.Global;
 import com.example.zenbook.networkselection.Utils.RANObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -38,6 +40,16 @@ public class RoundTripTime {
             } else {
                 start = false;
                 if(avg != null) {
+                    try {
+                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+                        Global.logFileOutputStream.write((min + "," + avg + "," + "," + max).getBytes());
+//                        Global.logFileOutputStream.write("\n".getBytes());
+                        Global.logFileOutputStream.close();
+                    } catch (FileNotFoundException fe) {
+                        fe.printStackTrace();
+                    } catch (IOException ie) {
+                        ie.printStackTrace();
+                    }
                     ranObject.setDelay((round(Math.abs(Math.min(0, (avg - Global.DELAY_TH) / Global.DELAY_TH)), 4) + ""));
                 }else ranObject.setDelay(0 + "");
             }

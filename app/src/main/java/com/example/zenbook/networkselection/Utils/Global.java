@@ -23,7 +23,7 @@ public class Global {
 //    public static String IPAddress = "172.31.137.193";
     public static double MIN_ENERGY = 0.97;
     public static double MAX_ENERGY = 4.217;
-    public static boolean ALWAYS_DO_ACTIVE = true;
+    public static boolean ALWAYS_DO_ACTIVE = false;
     public static int number_of_udp_packet = 2000;
     public static int DELAY_TH = 250;
     

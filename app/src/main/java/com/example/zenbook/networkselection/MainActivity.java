@@ -1,13 +1,17 @@
 package com.example.zenbook.networkselection;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -50,7 +54,11 @@ public class MainActivity extends Activity {
         ArrayList<RANObject> objects = new ArrayList<>();
     
         RANObject ranObject;
-        
+    
+        Permission marshMallowPermission = new Permission(this);
+        marshMallowPermission.checkPermissionForExternalStorage();
+        marshMallowPermission.requestPermissionForExternalStorage();
+                
         final Button startService = (Button)findViewById(R.id.startService);
         final Button stopService = (Button)findViewById(R.id.stopService);
         CheckedTextView powerTutor = (CheckedTextView)findViewById(R.id.checkedTextView);

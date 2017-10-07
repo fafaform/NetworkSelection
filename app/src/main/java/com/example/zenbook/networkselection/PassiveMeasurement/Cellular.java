@@ -74,16 +74,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: LTE");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: LTE" + "// MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println("MCC: " + cellIdentityLte.getMcc() + ", MNC: " + cellIdentityLte.getMnc() + ", CI: " + cellIdentityLte.getCi() + ", LAC: " + cellIdentityLte.getTac());
                         } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_UMTS) {
                             CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
@@ -94,16 +94,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UMTS");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UMTS" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println(cellinfogsm.getCellIdentity().getCid());
                         } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_CDMA) {
                             CellInfoCdma cellinfogsm = (CellInfoCdma) telephonyManager.getAllCellInfo().get(0);
@@ -114,16 +114,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: CDMA");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: CDMA" + "// " + cellinfogsm.getCellIdentity().getBasestationId()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println(cellinfogsm.getCellIdentity().getBasestationId());
                         } else if (telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_EDGE) {
                             CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
@@ -134,16 +134,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: EDGE");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: EDGE" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println(cellinfogsm.getCellIdentity().getCid());
                         }else if(telephonyManager.getNetworkType() == telephonyManager.NETWORK_TYPE_HSDPA){
                             CellInfoWcdma cellinfogsm = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
@@ -154,16 +154,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println(cellinfogsm.getCellIdentity().getCid());
                         } else {
                             CellInfoGsm cellinfogsm = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
@@ -174,16 +174,16 @@ public class Cellular {
                             rssi = cellSignalStrengthLte.getDbm();
                             networkType = telephonyManager.getNetworkType() + "";
                             System.out.println("CELLULAR " + "// RSSi: " + rssi + ":" + rss + "// BAND: UNKNOWN");
-                            try {
-                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
-                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
-                                Global.fileOutputStream.write("\n".getBytes());
-                                Global.fileOutputStream.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Global.fileOutputStream = new FileOutputStream(Global.file, true);
+//                                Global.fileOutputStream.write(("CELLULAR " + "// RSSi: " + rssi + "// BAND: UNKNOW" + "// " + cellinfogsm.getCellIdentity().getCid()).getBytes());
+//                                Global.fileOutputStream.write("\n".getBytes());
+//                                Global.fileOutputStream.close();
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                             System.out.println(cellinfogsm.getCellIdentity().getCid());
                         }
                 

@@ -208,16 +208,16 @@ public class GetEnergyEfficiency {
         power = energy - preEnergy;
         System.out.println("Energy usage (Joule): " + power);
     
-//        try {
-//            Global.energyFileOutputStream = new FileOutputStream(Global.energyFile, true);
-//            Global.energyFileOutputStream.write((power + "").getBytes());
-//            Global.energyFileOutputStream.write("\n".getBytes());
-//            Global.energyFileOutputStream.close();
-//        } catch (FileNotFoundException fe) {
-//            fe.printStackTrace();
-//        } catch (IOException ie) {
-//            ie.printStackTrace();
-//        }
+        try {
+            Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+            Global.logFileOutputStream.write((power + "").getBytes());
+            Global.logFileOutputStream.write("\n".getBytes());
+            Global.logFileOutputStream.close();
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        }
 //        System.out.println("Energy usage (Vary Joule): " + power/(2400*3600)/100);
 //        ranObject.setEnergyEfficiency((100 - power/(2400*3600))/100 + "");
         if(power > Global.MAX_ENERGY){

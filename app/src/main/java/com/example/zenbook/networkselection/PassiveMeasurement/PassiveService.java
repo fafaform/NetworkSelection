@@ -442,7 +442,7 @@ outterloop:
                 while (!Global.isConnected() || !wifiManager.getConnectionInfo().getSSID().substring(1, wifiManager.getConnectionInfo().getSSID().length() - 1).equals(ranObject.getSSID())) {
                     loop++;
                     System.out.println(loop);
-                    if(loop == 100){
+                    if(loop == 50 || loop == 100 || loop == 150){
                         //TODO: Connect to network
                         for (WifiConfiguration wifiConfiguration : savedNetwork) {
                             String save = wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1);
@@ -497,6 +497,18 @@ outterloop:
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
                     System.out.println("Connected");
+    
+                    try {
+                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+                        Global.logFileOutputStream.write((wifiManager.getConnectionInfo().getSSID() + ",").getBytes());
+//                        Global.logFileOutputStream.write("\n".getBytes());
+                        Global.logFileOutputStream.close();
+                    } catch (FileNotFoundException fe) {
+                        fe.printStackTrace();
+                    } catch (IOException ie) {
+                        ie.printStackTrace();
+                    }
+                    
                     GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject, Global.savedInstanceState);
                     getEnergyEfficiency.Start("WIFI");
                     new RoundTripTime(ranObject);
@@ -608,6 +620,18 @@ outterloop:
                 }
             }
             if(haveCellular && CELLULAR != null) {
+    
+                try {
+                    Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+                    Global.logFileOutputStream.write(("Cellular,").getBytes());
+//                        Global.logFileOutputStream.write("\n".getBytes());
+                    Global.logFileOutputStream.close();
+                } catch (FileNotFoundException fe) {
+                    fe.printStackTrace();
+                } catch (IOException ie) {
+                    ie.printStackTrace();
+                }
+                
                 GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR, Global.savedInstanceState);
                 getEnergyEfficiency.Start("CELLULAR");
                 new RoundTripTime(CELLULAR);
@@ -781,18 +805,18 @@ outterloop:
             }
         }catch (Exception e){
             e.printStackTrace();
-            try {
-                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                Global.logFileOutputStream.write(e.getMessage().getBytes());
-                Global.logFileOutputStream.write("\n".getBytes());
-                Global.logFileOutputStream.write(e.getLocalizedMessage().getBytes());
-                Global.logFileOutputStream.write("\n".getBytes());
-                Global.logFileOutputStream.close();
-            } catch (FileNotFoundException fe) {
-                fe.printStackTrace();
-            } catch (IOException ie) {
-                ie.printStackTrace();
-            }
+//            try {
+//                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                Global.logFileOutputStream.write(e.getMessage().getBytes());
+//                Global.logFileOutputStream.write("\n".getBytes());
+//                Global.logFileOutputStream.write(e.getLocalizedMessage().getBytes());
+//                Global.logFileOutputStream.write("\n".getBytes());
+//                Global.logFileOutputStream.close();
+//            } catch (FileNotFoundException fe) {
+//                fe.printStackTrace();
+//            } catch (IOException ie) {
+//                ie.printStackTrace();
+//            }
             return;
         }
     }
