@@ -1,0 +1,151 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:1-93:12
+	package
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:3:7-37
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:4:32-57
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:4:7-31
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+application
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:5:3-84:17
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:5:46-78
+	android:icon
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:5:16-45
+activity#edu.umich.PowerTutor.ui.UMLogger
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:6:5-13:16
+	android:screenOrientation
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:8:15-51
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:7:15-47
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:6:15-42
+activity#edu.umich.PowerTutor.ui.PowerTop
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:24:5-29:16
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:25:15-40
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:24:15-42
+intent-filter#android.intent.action.MAIN
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:26:7-28:23
+action#android.intent.action.MAIN
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:27:9-61
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:27:17-58
+activity#edu.umich.PowerTutor.ui.EditPreferences
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:46:5-51:16
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:47:15-49
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:46:15-49
+activity#edu.umich.PowerTutor.ui.ViewerPreferences
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:52:5-57:16
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:53:15-57
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:52:15-51
+activity#edu.umich.PowerTutor.widget.Configure
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:58:5-63:16
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:59:15-58
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:58:15-47
+intent-filter#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:60:7-62:23
+action#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:61:9-79
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:61:17-76
+activity#edu.umich.PowerTutor.widget.DataSourceConfigure
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:64:5-69:16
+	android:label
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:65:15-52
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:64:15-57
+receiver#edu.umich.PowerTutor.ui.StartupReceiver
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:70:5-75:16
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:70:15-49
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.category.HOME
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:71:7-74:23
+action#android.intent.action.BOOT_COMPLETED
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:72:9-71
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:72:17-68
+category#android.intent.category.HOME
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:73:9-65
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:73:19-62
+service#edu.umich.PowerTutor.service.UMLoggerService
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:76:5-64
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:76:14-53
+receiver#edu.umich.PowerTutor.widget.PowerWidget
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:77:5-83:18
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:77:15-49
+intent-filter#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:78:7-80:23
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:79:11-78
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:79:19-75
+meta-data#android.appwidget.provider
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:81:7-82:56
+	android:resource
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:82:18-53
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:81:18-59
+uses-sdk
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+	android:targetSdkVersion
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:3-41
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:86:13-38
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+		INJECTED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:87:3-65
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:87:20-62
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:88:3-77
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:88:20-74
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:89:3-74
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:89:20-71
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:90:3-73
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:90:20-70
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:91:3-77
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:91:20-74
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:92:3-79
+	android:name
+		ADDED from D:\Workspace\NetworkSelection\PowerTutor\src\main\AndroidManifest.xml:92:20-76

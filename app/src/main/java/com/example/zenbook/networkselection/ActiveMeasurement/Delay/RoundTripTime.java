@@ -42,7 +42,7 @@ public class RoundTripTime {
                 if(avg != null) {
                     try {
                         Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                        Global.logFileOutputStream.write((min + "," + avg + "," + "," + max).getBytes());
+                        Global.logFileOutputStream.write((min + "," + avg + "," + max + ",").getBytes());
 //                        Global.logFileOutputStream.write("\n".getBytes());
                         Global.logFileOutputStream.close();
                     } catch (FileNotFoundException fe) {

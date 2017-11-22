@@ -213,6 +213,11 @@ public class GetEnergyEfficiency {
             Global.logFileOutputStream.write((power + "").getBytes());
             Global.logFileOutputStream.write("\n".getBytes());
             Global.logFileOutputStream.close();
+            
+//            Global.energyFileOutputStream = new FileOutputStream(Global.energyFile, true);
+//            Global.energyFileOutputStream.write((power + "").getBytes());
+//            Global.energyFileOutputStream.write("\n".getBytes());
+//            Global.energyFileOutputStream.close();
         } catch (FileNotFoundException fe) {
             fe.printStackTrace();
         } catch (IOException ie) {

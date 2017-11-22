@@ -9,10 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.Toast;
@@ -31,6 +34,8 @@ import edu.umich.PowerTutor.service.UMLoggerService;
 
 public class MainActivity extends Activity {
     
+//    protected PowerManager.WakeLock mWakeLock;
+    
     @Override
     protected void onResume(){
         super.onResume();
@@ -46,6 +51,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    
+        Thread.setDefaultUncaughtExceptionHandler(new CustomizedExceptionHandler(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()));
+        
         Global.activity = this;
         Global.savedInstanceState = savedInstanceState;
 //        BatteryManager mBatteryManager = (BatteryManager)this.getSystemService(Context.BATTERY_SERVICE);

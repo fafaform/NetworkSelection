@@ -158,8 +158,6 @@ public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
 }
-// Returns the name of the components that are being logged.
-
 @Override public java.lang.String[] getComponents() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
@@ -373,8 +371,6 @@ static final int TRANSACTION_getRuntime = (android.os.IBinder.FIRST_CALL_TRANSAC
 static final int TRANSACTION_getUidInfo = (android.os.IBinder.FIRST_CALL_TRANSACTION + 7);
 static final int TRANSACTION_getUidExtra = (android.os.IBinder.FIRST_CALL_TRANSACTION + 8);
 }
-// Returns the name of the components that are being logged.
-
 public java.lang.String[] getComponents() throws android.os.RemoteException;
 public int[] getComponentsMaxPower() throws android.os.RemoteException;
 public int getNoUidMask() throws android.os.RemoteException;

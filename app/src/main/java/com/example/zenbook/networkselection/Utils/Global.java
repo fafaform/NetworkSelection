@@ -19,9 +19,12 @@ import java.util.ArrayList;
 public class Global {
 //    public static String IPAddress = "192.168.1.11";
 //    public static String IPAddress = "202.29.148.77";
+//    public static String IPAddress = "nbtcrehab.eng.psu.ac.th";
     public static String IPAddress = "nbtc.ee.psu.ac.th";
 //    public static String IPAddress = "172.31.137.193";
-    public static double MIN_ENERGY = 0.97;
+//    public static double MIN_ENERGY = 0.97;
+    public static double MIN_ENERGY = 0;
+//    public static double MAX_ENERGY = 10.0;
     public static double MAX_ENERGY = 4.217;
     public static boolean ALWAYS_DO_ACTIVE = false;
     public static int number_of_udp_packet = 2000;
