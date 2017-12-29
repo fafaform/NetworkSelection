@@ -78,7 +78,7 @@ public class PassiveService extends Service {
     public void onCreate() {
         doScanning = true;
 //        createFile();
-        createLogFile();
+//        createLogFile();
         createResultFile();
 //        createEnergyFile();
     }
@@ -360,6 +360,8 @@ outterloop:
     
                             Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
                             Global.resultFileOutputStream.write(("Time: " + TimeUnit.MILLISECONDS.toMinutes(processingTime) + ":" + (TimeUnit.MILLISECONDS.toSeconds(processingTime) % 60)).getBytes());
+                            Global.resultFileOutputStream.write("\n".getBytes());
+                            Global.resultFileOutputStream.write(dateFormat.getCalendar().getTime().toString().getBytes());
                             Global.resultFileOutputStream.write("\n\n".getBytes());
                             Global.resultFileOutputStream.close();
     
@@ -397,8 +399,12 @@ outterloop:
     
     private void doActive(){
         try {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//            System.out.println(dateFormat.getCalendar().getTime().toString());
             try {
                 Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
+                Global.resultFileOutputStream.write(dateFormat.getCalendar().getTime().toString().getBytes());
+                Global.resultFileOutputStream.write("\n".getBytes());
                 Global.resultFileOutputStream.write(("SSID,RSSI,BAND,ENERGY_EFFICIENCY,UDP_SUCCESSRATE,DELAY").getBytes());
                 Global.resultFileOutputStream.write("\n".getBytes());
                 Global.resultFileOutputStream.close();
@@ -498,16 +504,16 @@ outterloop:
                     System.out.println("SSID: " + wifiManager.getConnectionInfo().getSSID() + ", Save: " + ranObject.getSSID());
                     System.out.println("Connected");
     
-                    try {
-                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                        Global.logFileOutputStream.write((wifiManager.getConnectionInfo().getSSID() + ",").getBytes());
-//                        Global.logFileOutputStream.write("\n".getBytes());
-                        Global.logFileOutputStream.close();
-                    } catch (FileNotFoundException fe) {
-                        fe.printStackTrace();
-                    } catch (IOException ie) {
-                        ie.printStackTrace();
-                    }
+//                    try {
+//                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                        Global.logFileOutputStream.write((wifiManager.getConnectionInfo().getSSID() + ",").getBytes());
+////                        Global.logFileOutputStream.write("\n".getBytes());
+//                        Global.logFileOutputStream.close();
+//                    } catch (FileNotFoundException fe) {
+//                        fe.printStackTrace();
+//                    } catch (IOException ie) {
+//                        ie.printStackTrace();
+//                    }
                     
                     GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, ranObject, Global.savedInstanceState);
                     getEnergyEfficiency.Start("WIFI");
@@ -621,16 +627,16 @@ outterloop:
             }
             if(haveCellular && CELLULAR != null) {
     
-                try {
-                    Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                    Global.logFileOutputStream.write(("Cellular,").getBytes());
-//                        Global.logFileOutputStream.write("\n".getBytes());
-                    Global.logFileOutputStream.close();
-                } catch (FileNotFoundException fe) {
-                    fe.printStackTrace();
-                } catch (IOException ie) {
-                    ie.printStackTrace();
-                }
+//                try {
+//                    Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                    Global.logFileOutputStream.write(("Cellular,").getBytes());
+////                        Global.logFileOutputStream.write("\n".getBytes());
+//                    Global.logFileOutputStream.close();
+//                } catch (FileNotFoundException fe) {
+//                    fe.printStackTrace();
+//                } catch (IOException ie) {
+//                    ie.printStackTrace();
+//                }
                 
                 GetEnergyEfficiency getEnergyEfficiency = new GetEnergyEfficiency(Global.activity, CELLULAR, Global.savedInstanceState);
                 getEnergyEfficiency.Start("CELLULAR");
@@ -729,7 +735,21 @@ outterloop:
 //                temp.setDelay(0.0 + "");
 //                SAVEDDATA.add(0, temp);
             }
+            DateFormat startSelection = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Long startTime = startSelection.getCalendar().getTimeInMillis();
             SelectNetwork selectNetwork = new SelectNetwork(SAVEDDATA);
+            DateFormat stopSelection = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            long selectionTime = stopSelection.getCalendar().getTimeInMillis() - startTime;
+            try {
+                Global.resultFileOutputStream = new FileOutputStream(Global.resultFile, true);
+                Global.resultFileOutputStream.write(("Network Selection Time" + selectionTime).getBytes());
+                Global.resultFileOutputStream.write("\n".getBytes());
+                Global.resultFileOutputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             double[] weight = selectNetwork.getWeight();
             //if not cellular
             if (!SAVEDDATA.get(selectNetwork.getRANObject()).getSSID().equals("Cellular")) {
@@ -854,35 +874,35 @@ outterloop:
 //            }
 //        }
 //    }
-    private void createLogFile(){
-        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
-        if (!externalD.exists()) {
-            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
-            dir.mkdirs();
-            Global.logFile = new File(externalD, "Log.txt");
-            try {
-                Global.logFile.createNewFile();
-                Global.logFileOutputStream = new FileOutputStream(Global.logFile,false);
-                Global.logFileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-            File log = new File(externalD, "Log.txt");
-            if(!log.exists()){
-                Global.logFile = new File(externalD, "Log.txt");
-                try {
-                    Global.logFile.createNewFile();
-                    Global.logFileOutputStream = new FileOutputStream(Global.logFile,false);
-                    Global.logFileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                Global.logFile = log;
-            }
-        }
-    }
+//    private void createLogFile(){
+//        File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+//        if (!externalD.exists()) {
+//            File dir = new File(Environment.getExternalStorageDirectory() + "/Download/");
+//            dir.mkdirs();
+//            Global.logFile = new File(externalD, "Log.txt");
+//            try {
+//                Global.logFile.createNewFile();
+//                Global.logFileOutputStream = new FileOutputStream(Global.logFile,false);
+//                Global.logFileOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+//            File log = new File(externalD, "Log.txt");
+//            if(!log.exists()){
+//                Global.logFile = new File(externalD, "Log.txt");
+//                try {
+//                    Global.logFile.createNewFile();
+//                    Global.logFileOutputStream = new FileOutputStream(Global.logFile,false);
+//                    Global.logFileOutputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }else{
+//                Global.logFile = log;
+//            }
+//        }
+//    }
     private void createResultFile(){
         File externalD = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
         if (!externalD.exists()) {

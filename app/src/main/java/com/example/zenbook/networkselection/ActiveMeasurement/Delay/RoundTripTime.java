@@ -40,16 +40,16 @@ public class RoundTripTime {
             } else {
                 start = false;
                 if(avg != null) {
-                    try {
-                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                        Global.logFileOutputStream.write((min + "," + avg + "," + max + ",").getBytes());
-//                        Global.logFileOutputStream.write("\n".getBytes());
-                        Global.logFileOutputStream.close();
-                    } catch (FileNotFoundException fe) {
-                        fe.printStackTrace();
-                    } catch (IOException ie) {
-                        ie.printStackTrace();
-                    }
+//                    try {
+//                        Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                        Global.logFileOutputStream.write((min + "," + avg + "," + max + ",").getBytes());
+////                        Global.logFileOutputStream.write("\n".getBytes());
+//                        Global.logFileOutputStream.close();
+//                    } catch (FileNotFoundException fe) {
+//                        fe.printStackTrace();
+//                    } catch (IOException ie) {
+//                        ie.printStackTrace();
+//                    }
                     ranObject.setDelay((round(Math.abs(Math.min(0, (avg - Global.DELAY_TH) / Global.DELAY_TH)), 4) + ""));
                 }else ranObject.setDelay(0 + "");
             }

@@ -33,8 +33,8 @@ public class Global {
 //    public static File file;
 //    public static FileOutputStream fileOutputStream;
     
-    public static File logFile;
-    public static FileOutputStream logFileOutputStream;
+//    public static File logFile;
+//    public static FileOutputStream logFileOutputStream;
     
     public static File resultFile;
     public static FileOutputStream resultFileOutputStream;

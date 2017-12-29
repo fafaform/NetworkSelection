@@ -55,19 +55,19 @@ public class ServerAsync implements Runnable {
 //            if(message.equals(Global.lossRate+"")) {
 //                System.out.println("RECEIVED: " + message);
 //            System.out.println((Integer.parseInt(message)-1) + "");
-            try {
-                dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                processingTime = dateFormat.getCalendar().getTime().getTime() - processingTime;
-//                System.out.println((double)(Integer.parseInt(message)-1)/processingTime + " " + processingTime);
-                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
-                Global.logFileOutputStream.write((round((double)(Integer.parseInt(message)-1)/processingTime, 4) + ",").getBytes());
-//                Global.logFileOutputStream.write("\n".getBytes());
-                Global.logFileOutputStream.close();
-            } catch (FileNotFoundException fe) {
-                fe.printStackTrace();
-            } catch (IOException ie) {
-                ie.printStackTrace();
-            }
+//            try {
+//                dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                processingTime = dateFormat.getCalendar().getTime().getTime() - processingTime;
+////                System.out.println((double)(Integer.parseInt(message)-1)/processingTime + " " + processingTime);
+//                Global.logFileOutputStream = new FileOutputStream(Global.logFile, true);
+//                Global.logFileOutputStream.write((round((double)(Integer.parseInt(message)-1)/processingTime, 4) + ",").getBytes());
+////                Global.logFileOutputStream.write("\n".getBytes());
+//                Global.logFileOutputStream.close();
+//            } catch (FileNotFoundException fe) {
+//                fe.printStackTrace();
+//            } catch (IOException ie) {
+//                ie.printStackTrace();
+//            }
             ranObject.setUDPSuccessRate((double)(Integer.parseInt(message)-1)/(Global.number_of_udp_packet) + "");
 //            }else{
 //                System.err.println("RECEIVED: " + message);
